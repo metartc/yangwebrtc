@@ -5,6 +5,7 @@
 
 支持Webrtc/Srt/Rtmp     
 支持Srs http://www.ossrs.net/  
+支持智能终端和应用程序客户端  
   
 yangmeeting 视频会议  
 yangrecord 高清录播直播系统    
