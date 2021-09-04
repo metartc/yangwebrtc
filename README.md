@@ -37,3 +37,5 @@ yangrtc 可支持视频会议、高清录播直播等多种视音频应用。
 编译环境：  
 1、在ubuntu18.04和ubuntu20.04，用Qt和eclipse编译。  
 2、Win10下Qt，X64编译，第三方组件用vs2019和mingw64编译。 
+
+yang_config.ini配置参数https://github.com/yangrtc/yangrtc/wiki/config_file  
