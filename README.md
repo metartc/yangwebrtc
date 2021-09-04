@@ -6,11 +6,13 @@
 支持Webrtc/Srt/Rtmp     
 支持Srs http://www.ossrs.net/  
 支持智能终端和应用程序客户端  
+支持Linux/Windows等多操作系统  
   
 yangmeeting 视频会议  
 yangrecord 高清录播直播系统    
 yangvrscreen 虚拟和桌面的录制和推流(webrtc/rtmp)  
 yangplayer 网路播放器(wetrtc/rtmp)  
+YangMeetingServer 视频会议服务端程序  
 
 yangwebrtc功能：  
 1、视频编码 8bit:x264、x265、vaapi、nvenc等，二期增加AV1和多种硬件编码。  
@@ -35,4 +37,3 @@ yangrtc 可支持视频会议、高清录播直播等多种视音频应用。
 编译环境：  
 1、在ubuntu18.04和ubuntu20.04，用Qt和eclipse编译。  
 2、Win10下Qt，X64编译，第三方组件用vs2019和mingw64编译。 
-
