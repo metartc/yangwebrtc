@@ -8,6 +8,10 @@
 支持智能终端和应用程序客户端  
 支持Linux/Windows等多操作系统  
   
+yangwebrtc3.0规划：  
+1、支持android/ios/mac等。  
+2、webrtc支持h265、av1等。  
+    
 yangmeeting 视频会议  
 yangrecord 高清录播直播系统    
 yangvrscreen 虚拟和桌面的录制和推流(webrtc/rtmp)  
