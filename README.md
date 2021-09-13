@@ -41,13 +41,13 @@ YangMeetingServer 视频会议服务端程序
 
 ## Getting Started
 
-下载源码，推荐ubuntu和win10
+下载源码，推荐ubuntu或者win10
 
 git clone https://github.com/yangrtc/yangwebrtc.git 
 
- git clone https://gitee.com/yangrtc/yangwebrtc.git
-
 下载运行环境：在发行版中下载yangwebrtc2.0 runtime，里面包含所需动态库，动态库默认目录名称为lib
+
+https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime
 
 ### 服务器部署
 
@@ -57,7 +57,7 @@ git clone https://github.com/yangrtc/yangwebrtc.git
 
 启动两个服务程序
 
-1、Srs4.0 146及以后版本，下载编译参考http://www.ossrs.net/releases/
+1、推荐Srs4.0.146及以后版本，下载编译参考http://github.com/ossrs/srs#usage
 
 ​      objs/srs -c conf/https.rtc.conf
 
@@ -79,6 +79,12 @@ dataServerIP=10.42.0.1
 默认用户有admin密码123
 用户a01 密码123
 
+### 第三方系统源码
 
+https://github.com/yangrtc/yangwebrtc/releases/tag/thirdparty2.0
+
+里面不包含支持vr动态库，如需支持vr，下载opencv3
+
+https://github.com/opencv/opencv/releases/tag/3.4.13 及以上版本
 
 yang_config.ini配置参数https://github.com/yangrtc/yangrtc/wiki/config_file  
