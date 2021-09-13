@@ -33,10 +33,10 @@ yangvrscreen 虚拟和桌面的录制和推流(webrtc/rtmp)
 yangplayer 网路播放器(wetrtc/rtmp)  
 YangMeetingServer 视频会议服务端程序  
 
-### yangwebrtc3.0规划
+### yangwebrtc3.0规划  
 
- 1、支持android/ios/mac等。
- 2、webrtc支持h265、av1等。 
+ 1、支持android/ios/mac等。  
+ 2、webrtc支持h265、av1等。   
 
 
 ## Getting Started
