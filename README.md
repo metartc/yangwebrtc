@@ -27,11 +27,11 @@ webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib�
 
 ### 目录功能
 
-yangmeeting 视频会议
-yangrecord 高清录播直播系统
-yangvrscreen 虚拟和桌面的录制和推流(webrtc/rtmp)
-yangplayer 网路播放器(wetrtc/rtmp)
-YangMeetingServer 视频会议服务端程序
+yangmeeting 视频会议  
+yangrecord 高清录播直播系统  
+yangvrscreen 虚拟和桌面的录制和推流(webrtc/rtmp)  
+yangplayer 网路播放器(wetrtc/rtmp)  
+YangMeetingServer 视频会议服务端程序  
 
 ### yangwebrtc3.0规划
 
