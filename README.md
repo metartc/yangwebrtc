@@ -55,9 +55,21 @@ git clone https://github.com/yangrtc/yangwebrtc.git
 
 数据库参数配置在目录里的yang_config.ini文件中。
 
+启动两个服务程序
+
+1、Srs4.0 146及以后版本，下载编译参考http://www.ossrs.net/releases/
+
+​      objs/srs -c conf/https.rtc.conf
+
+2、信令和数据服务程序
+
+​    ./YangMeetingServer
+
 ### 客户端编译
 
-用QT打开工程YangVAlib2.0、YangMeetingLib2.0、YangMeeting2.0 ,将其.pro文件中HOME_BASE=..\更改为当前目录。然后顺序编译。
+用QT打开工程YangVAlib2.0、YangMeetingLib2.0、YangMeeting2.0 ,将其.pro文件中HOME_BASE=..\更改为当前目录。
+
+静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。
 
 编译后生成可执行文件YangMeeting2或YangMeeting2.exe 放入下载的运行环境，修改配置文件yang_config.ini  
 rtcServerIP=10.42.0.1  
