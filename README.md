@@ -4,9 +4,7 @@ yangwebrtc是一个自主研发的支持Webrtc/Srt/Rtmp的rtc架构，包含多�
 
 支持视频会议、高清录播直播、直播互动等多种视音频应用。
  可用于远程教育、远程医疗、指挥调度、安防监控、影视录播、协同办公、直播互动等多种行业应用。
-
 webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib和浏览器互通
-
 支持Linux/Windows操作系统，android/ios/mac版本正开发中
 
 ### yangwebrtc功能
