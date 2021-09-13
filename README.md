@@ -38,8 +38,34 @@ yangrtc 可支持视频会议、高清录播直播等多种视音频应用。
 可用于远程教育、远程医疗、指挥调度、安防监控、影视录播、协同办公、直播互动等多种行业应用。  
 第三方类库为动态调用，编译时不依赖第三方类库包。  
 
-编译环境：  
-1、在ubuntu18.04和ubuntu20.04，用Qt和eclipse编译。  
-2、Win10下Qt，X64编译，第三方组件用vs2019和mingw64编译。 
+## Getting Started
+
+下载源码，推荐ubuntu和win10
+
+git clone https://github.com/yangrtc/yangwebrtc.git 
+
+ git clone https://gitee.com/yangrtc/yangwebrtc.git
+
+下载运行环境：在发行版中下载yangwebrtc2.0 runtime，里面包含所需动态库，动态库默认目录名称为lib
+
+### 服务器部署
+
+可使用ide如eclipse等编译YangMeetingServer，建立mysql数据库yangav,字符集utf-8,从文件yangvd.sql导入数据
+
+数据库参数配置在目录里的yang_config.ini文件中。
+
+### 客户端编译
+
+用QT打开工程YangVAlib2.0、YangMeetingLib2.0、YangMeeting2.0 ,将其.pro文件中HOME_BASE=..\更改为当前目录。然后顺序编译。
+
+编译后生成可执行文件YangMeeting2或YangMeeting2.exe 放入下载的运行环境，修改配置文件yang_config.ini
+rtcServerIP=10.42.0.1
+httpServerIP=10.42.0.1
+dataServerIP=10.42.0.1
+将这三个地址配置为服务器地址,然后点击应用程序即可运行。
+默认用户有admin密码123
+用户a01 密码123
+
+
 
 yang_config.ini配置参数https://github.com/yangrtc/yangrtc/wiki/config_file  
