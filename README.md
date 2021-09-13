@@ -58,10 +58,10 @@ git clone https://github.com/yangrtc/yangwebrtc.git
 
 用QT打开工程YangVAlib2.0、YangMeetingLib2.0、YangMeeting2.0 ,将其.pro文件中HOME_BASE=..\更改为当前目录。然后顺序编译。
 
-编译后生成可执行文件YangMeeting2或YangMeeting2.exe 放入下载的运行环境，修改配置文件yang_config.ini
-rtcServerIP=10.42.0.1
-httpServerIP=10.42.0.1
-dataServerIP=10.42.0.1
+编译后生成可执行文件YangMeeting2或YangMeeting2.exe 放入下载的运行环境，修改配置文件yang_config.ini  
+rtcServerIP=10.42.0.1  
+httpServerIP=10.42.0.1  
+dataServerIP=10.42.0.1  
 将这三个地址配置为服务器地址,然后点击应用程序即可运行。
 默认用户有admin密码123
 用户a01 密码123
