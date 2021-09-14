@@ -43,6 +43,8 @@ YangMeetingServer 视频会议服务端程序
 
 ## Getting Started
 
+Remark: Yangwebrtc2.0 is developing and not stable.  
+
 下载源码，推荐ubuntu或者win10
 
 git clone https://github.com/yangrtc/yangwebrtc.git 
