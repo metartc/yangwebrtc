@@ -37,7 +37,9 @@ YangMeetingServer 视频会议服务端程序
 
  1、支持android/ios/mac等。  
  2、webrtc支持h265、av1等。   
-
+ 3、传输加密改为国密加密，修改srtp支持国密。  
+ 4、实现10位、16位全链路打通，从采集、编码、传输、解码、播放这些环节全部支持10位。  
+  
 
 ## Getting Started
 
