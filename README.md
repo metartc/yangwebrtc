@@ -72,7 +72,7 @@ https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime
 
 ### 客户端编译
 
-用QT打开工程YangVAlib2.0、YangMeetingLib2.0、YangMeeting2.0 ,将其.pro文件中HOME_BASE=..\更改为当前目录。
+用QT(推荐5.14.2及以上版本)打开工程YangVAlib2.0、YangMeetingLib2.0、YangMeeting2.0 ,将其.pro文件中HOME_BASE=..\更改为当前目录。
 
 静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。
 
