@@ -79,6 +79,14 @@ dataServerIP=10.42.0.1
 默认用户有admin密码123
 用户a01 密码123
 
+### linux部署图   
+![图片](https://user-images.githubusercontent.com/87118023/133176974-b8a0c7b3-2eb3-4cc4-9324-a6c4547a4a42.png)
+
+### windows部署图  
+![图片](https://user-images.githubusercontent.com/87118023/133177342-d4fe44b7-a6c0-4f40-8e05-5c1587053933.png)
+
+  
+
 ### 第三方系统源码
 
 https://github.com/yangrtc/yangwebrtc/releases/tag/thirdparty2.0
