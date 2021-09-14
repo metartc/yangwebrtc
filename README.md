@@ -75,7 +75,7 @@ https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime
 rtcServerIP=10.42.0.1  
 httpServerIP=10.42.0.1  
 dataServerIP=10.42.0.1  
-将这三个地址配置为服务器地址,然后点击应用程序即可运行。
+将这三个地址配置为服务器地址,然后点击应用程序即可运行，linux:meeting.sh windwos:YangMeeting2.exe。
 默认用户有admin密码123
 用户a01 密码123
 
