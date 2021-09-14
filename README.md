@@ -76,8 +76,9 @@ rtcServerIP=10.42.0.1
 httpServerIP=10.42.0.1  
 dataServerIP=10.42.0.1  
 将这三个地址配置为服务器地址,然后点击应用程序即可运行，linux:meeting.sh windwos:YangMeeting2.exe。
-默认用户有admin密码123
-用户a01 密码123
+默认用户:  
+用户名：admin密码:123  
+用户名：a01  密码:123  
 
 ### linux部署图   
 ![图片](https://user-images.githubusercontent.com/87118023/133176974-b8a0c7b3-2eb3-4cc4-9324-a6c4547a4a42.png)
