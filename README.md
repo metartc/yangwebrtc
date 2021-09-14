@@ -83,7 +83,8 @@ dataServerIP=10.42.0.1
 ![图片](https://user-images.githubusercontent.com/87118023/133176974-b8a0c7b3-2eb3-4cc4-9324-a6c4547a4a42.png)
 
 ### windows部署图  
-![图片](https://user-images.githubusercontent.com/87118023/133177342-d4fe44b7-a6c0-4f40-8e05-5c1587053933.png)
+![图片](https://user-images.githubusercontent.com/87118023/133177771-3c512f7a-46bf-4a36-b1ce-1a3e2ea43940.png)
+
 
   
 
