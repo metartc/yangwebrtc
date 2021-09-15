@@ -58,10 +58,6 @@ https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime
 
 ### 服务器部署
 
-可使用ide如eclipse等编译YangMeetingServer，建立mysql数据库yangav,字符集utf-8,从文件yangvd.sql导入数据
-
-数据库参数配置在目录里的yang_config.ini文件中。
-
 启动服务程序，推荐Srs4.0.146及以后版本，下载编译参考http://github.com/ossrs/srs#usage
 
 ​      objs/srs -c conf/https.rtc.conf
