@@ -28,6 +28,8 @@ webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib�
 
 ### 目录功能
 
+YangPushStream webrtc推流系统
+YangPlayer2.0 webrtc拉流播放系统
 yangmeeting 视频会议  
 yangrecord 高清录播直播系统  
 yangvrscreen 虚拟和桌面的录制和推流(webrtc/rtmp)  
@@ -66,32 +68,19 @@ https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime
 
 ​      objs/srs -c conf/https.rtc.conf
 
-2、信令和数据服务程序
 
-​    ./YangMeetingServer
 
 ### 客户端编译
 
-用QT(推荐5.14.2及以上版本)打开工程YangVAlib2.0、YangMeetingLib2.0、YangMeeting2.0 ,将其.pro文件中HOME_BASE=..\更改为当前目录。
+用QT(推荐5.14.2及以上版本)打开工程YangVAlib2.0、YangPushStream、YangPlayer2.0 ,将其.pro文件中HOME_BASE=..\更改为当前目录。
 
 静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。
 
-编译后生成可执行文件YangMeeting2或YangMeeting2.exe 放入下载的运行环境，修改配置文件yang_config.ini  
-rtcServerIP=10.42.0.1  
-httpServerIP=10.42.0.1  
-dataServerIP=10.42.0.1  
-将这三个地址配置为服务器地址,然后点击应用程序即可运行，linux:meeting.sh windwos:YangMeeting2.exe。  
-默认用户:  
-用户名：admin密码:123  
-用户名：a01  密码:123  
+编译后生成可执行文件放入下载的运行环境即可运行  
+ 
+视频会议YangMeeting2.0部署编译：  
 
-### linux部署图   
-![图片](https://user-images.githubusercontent.com/87118023/133176974-b8a0c7b3-2eb3-4cc4-9324-a6c4547a4a42.png)
-
-### windows部署图  
-![图片](https://user-images.githubusercontent.com/87118023/133177771-3c512f7a-46bf-4a36-b1ce-1a3e2ea43940.png)
-
-
+https://github.com/yangrtc/yangwebrtc/wiki/YangMeeting-Getting-Started
   
 
 ### 第三方系统源码
