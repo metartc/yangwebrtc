@@ -62,9 +62,7 @@ https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime
 
 数据库参数配置在目录里的yang_config.ini文件中。
 
-启动两个服务程序
-
-1、推荐Srs4.0.146及以后版本，下载编译参考http://github.com/ossrs/srs#usage
+启动服务程序，推荐Srs4.0.146及以后版本，下载编译参考http://github.com/ossrs/srs#usage
 
 ​      objs/srs -c conf/https.rtc.conf
 
