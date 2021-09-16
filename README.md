@@ -86,7 +86,7 @@ windows:bin/app_win_release bin/lib_win_release
 
 编译后生成可执行文件放入下载的运行环境即可运行  
  
-视频会议YangMeeting2.0部署编译：  
+#### 视频会议YangMeeting2.0编译 
 
 https://github.com/yangrtc/yangwebrtc/wiki/YangMeeting-Getting-Started
   
