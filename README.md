@@ -30,7 +30,7 @@ webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib�
 #### 客户端
 YangPushStream webrtc推流系统  
 YangPlayer2.0 webrtc拉流播放系统  
-yangmeeting2 视频会议
+yangmeeting2 视频会议  
 yangrecord 高清录播直播系统  
 yangvrscreen 虚拟和桌面的录制和推流(webrtc/rtmp)  
 
