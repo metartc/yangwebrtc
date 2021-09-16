@@ -27,13 +27,13 @@ webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib�
  15、64位编程，不支持32位。  
 
 ### 目录功能
-
+#### 客户端
 YangPushStream webrtc推流系统  
 YangPlayer2.0 webrtc拉流播放系统  
-yangmeeting 视频会议  
+yangmeeting2 视频会议  
 yangrecord 高清录播直播系统  
 yangvrscreen 虚拟和桌面的录制和推流(webrtc/rtmp)  
-yangplayer 网路播放器(wetrtc/rtmp)  
+#### 服务端
 YangMeetingServer 视频会议服务端程序  
 
 ### yangwebrtc3.0规划  
