@@ -28,7 +28,7 @@ unix{
  LIBS += -lYangAVLib2  -lpthread -lasound -ldl  -lssl2 -lcrypto2  -lsrtp2
 }
 win32{
-     HOME_BASE=..\
+     HOME_BASE=../
     INCLUDEPATH += $$HOME_BASE\include
     CONFIG(debug, debug|release) {
         LIBS += -L$$HOME_BASE/bin/lib_win_debug
