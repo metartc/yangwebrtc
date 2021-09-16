@@ -26,7 +26,7 @@ unix{
 win32{
     DEFINES += __WIN32__
     DEFINES +=_AMD64_
-    HOME_BASE=..\
+    HOME_BASE=../
     INCLUDEPATH += $$HOME_BASE\include
     INCLUDEPATH += $$HOME_BASE\thirdparty\include
     INCLUDEPATH += $$HOME_BASE\thirdparty\include\win
