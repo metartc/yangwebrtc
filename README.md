@@ -66,15 +66,15 @@ https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime
 
 ### 客户端编译
 
-用QT(推荐5.14.2及以上版本)打开工程YangVAlib2.0、YangPushStream、YangPlayer2.0 ,将其.pro文件中HOME_BASE=..\更改为当前目录。
+用QT(推荐5.14.2及以上版本)打开工程YangVAlib2.0、YangPushStream、YangPlayer2.0 ,如需改动目录将其.pro文件中HOME_BASE=..\更改为所需目录。
 
 静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。  
 Remark:windows下qt编译器为mingw64  
-编译后的二进制文件在当前bin目录下
-debug目录
+编译后的二进制文件在当前bin目录下  
+debug目录  
 linux:bin/app_debug bin/lib_debug  
 windows:bin/app_win_debug bin/lib_win_debug  
-release目录
+release目录  
 linux:bin/app_release bin/lib_release  
 windows:bin/app_win_release bin/lib_win_release  
 
