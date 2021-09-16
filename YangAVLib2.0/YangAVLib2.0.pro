@@ -15,7 +15,7 @@ unix{
     HOME_BASE=../
     INCLUDEPATH += $$HOME_BASE/include
     INCLUDEPATH += $$HOME_BASE/thirdparty/include
-    INCLUDEPATH += $$HOME_BASE/lib/YangAVLib2.0/src
+    INCLUDEPATH += $$HOME_BASE/YangAVLib2.0/src
   CONFIG(debug, debug|release) {
         DESTDIR += $$HOME_BASE/bin/lib_debug
     }else{
@@ -31,7 +31,7 @@ win32{
     INCLUDEPATH += $$HOME_BASE\include
     INCLUDEPATH += $$HOME_BASE\thirdparty\include
     INCLUDEPATH += $$HOME_BASE\thirdparty\include\win
-    INCLUDEPATH += $$HOME_BASE\lib\YangAVLib2.0\src
+    INCLUDEPATH += $$HOME_BASE\YangAVLib2.0\src
   CONFIG(debug, debug|release) {
         DESTDIR += $$HOME_BASE\bin\lib_win_debug
     }else{
