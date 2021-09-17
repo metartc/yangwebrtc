@@ -55,9 +55,6 @@ Remark: Yangwebrtc2.0 is developing and not stable.
 
 git clone https://github.com/yangrtc/yangwebrtc.git 
 
-下载运行环境：在发行版中下载yangwebrtc2.0 runtime，里面包含所需动态库，动态库默认目录名称为lib
-
-https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime
 
 ### 服务器部署
 
@@ -82,7 +79,8 @@ windows:bin/app_win_debug bin/lib_win_debug
 linux:bin/app_release bin/lib_release  
 windows:bin/app_win_release bin/lib_win_release  
 
-remark:如用qt调试，需将yang_config.ini和lib目录copy到debug和release目录下  
+remark:如用qt调试，需将yang_config.ini和lib目录copy到debug和release目录下 
+remark:将可执行程序放到运行环境中即可运行  
 yang_config.ini和lib目录下载链接:https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime  
 
 
