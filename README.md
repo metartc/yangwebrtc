@@ -82,6 +82,8 @@ windows:bin/app_win_debug bin/lib_win_debug
 linux:bin/app_release bin/lib_release  
 windows:bin/app_win_release bin/lib_win_release  
 
+remark:如用qt调试，需将yang_config.ini和lib目录copy到debug和release目录下  
+
 
 
 编译后生成可执行文件放入下载的运行环境即可运行  
