@@ -79,9 +79,10 @@ windows:bin/app_win_debug bin/lib_win_debug
 linux:bin/app_release bin/lib_release  
 windows:bin/app_win_release bin/lib_win_release  
 
-#### windows runtime lib
+remark:程序需要一些动态库才能运行  
+#### windows lib dlls
 ![图片](https://user-images.githubusercontent.com/87118023/133883028-78abbe6f-4fa1-4817-8ed5-c29951561657.png)
-#### linux runtime lib
+#### linux lib so
 ![图片](https://user-images.githubusercontent.com/87118023/133883160-c10df7ba-ea97-482d-99b4-cb09af73d723.png)
 
 remark:如用qt调试，需将yang_config.ini和lib目录copy到debug和release目录下   
