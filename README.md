@@ -7,7 +7,9 @@ yangwebrtc是一个自主研发的支持Webrtc/Srt/Rtmp的rtc架构，包含多�
 webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib和浏览器互通  
 支持Srs sfu https://github.com/ossrs/srs/  
 支持Linux/Windows操作系统，android/ios/mac版本正开发中  
+### 视频会议高清录播等应用系统
 
+ **已经移到https://gitee.com/yangrtc/yangrtc** 
 ### yangwebrtc功能
 
  1、视频编码 8bit:x264、x265、vaapi、nvenc等，二期增加AV1和多种硬件编码。  
@@ -28,16 +30,9 @@ webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib�
 
 ### 目录模块
 #### 客户端
+YangAVLib2.0 yangwebrtc基础类库，实现所有核心功能  
 YangPushStream webrtc推流系统  
 YangPlayer2.0 webrtc拉流播放系统  
-yangmeeting2 视频会议  
-yangrecord 高清录播直播系统  
-yangvrscreen 虚拟和桌面的录制和推流(webrtc/rtmp)  
-
-YangAVLib2.0 yangwebrtc基础类库，实现所有核心功能  
-YangMeetingLib2.0 视频会议基础类库  
-#### 服务端
-YangMeetingServer 视频会议服务端程序  
 
 ### yangwebrtc3.0规划  
 
