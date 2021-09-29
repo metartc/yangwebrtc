@@ -68,6 +68,8 @@ QT下载地址：https://download.qt.io/archive/qt/5.14/5.14.2/
 静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。  
 Remark:windows下qt编译器为mingw64  
 Remark:ubuntu默认不支持opengl sudo apt-get install libgl1-mesa-dev  
+### 第三方系统lib
+https://github.com/yangrtc/yangwebrtc/releases/tag/thirdparty2.0  
 编译后的二进制文件在当前bin目录下  
 #### debug目录  
 linux:bin/app_debug bin/lib_debug  
