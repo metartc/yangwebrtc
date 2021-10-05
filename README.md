@@ -28,11 +28,13 @@ webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib�
  14、专业摄像头的云台控制与多镜头导播切换。  
  15、64位编程，不支持32位。  
 
-### 目录模块
-#### 客户端
-YangAVLib2.0 yangwebrtc基础类库，实现所有核心功能  
-YangPushStream webrtc推流系统  
-YangPlayer2.0 webrtc拉流播放系统  
+### 目录简介
+#### libyangrtc2 
+yangwebrtc基础类库，实现所有核心功能  
+#### yangpushstream2 
+webrtc推流系统demo  
+#### yangplayer2 
+webrtc拉流播放系统demo 
 
 ### yangwebrtc3.0规划  
 
