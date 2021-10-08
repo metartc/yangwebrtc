@@ -83,6 +83,8 @@ windows:bin/app_win_release bin/lib_win_release
  **remark:程序需要一些动态库才能运行，所需动态库在lib文件夹里，lib文件夹在runtime包中  **   
  **remark:如用qt调试，需将yang_config.ini和lib目录copy到debug和release目录下  **  
 yang_config.ini和lib目录下载链接:https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime   
+#### windows qt debug dlls
+![图片](https://user-images.githubusercontent.com/87118023/136520546-a03812a7-f91a-479d-a1ff-f6771829d202.png)
 
 #### windows lib dlls
 ![图片](https://user-images.githubusercontent.com/87118023/133883028-78abbe6f-4fa1-4817-8ed5-c29951561657.png)
