@@ -8,7 +8,6 @@ webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib�
 支持Srs sfu https://github.com/ossrs/srs/  
 支持Linux/Windows操作系统，android/ios/mac版本正开发中  
 ### 视频会议高清录播等应用系统
-
  **已经移到https://github.com/yangrtc/yangrtc** 
 ### yangwebrtc功能
 
