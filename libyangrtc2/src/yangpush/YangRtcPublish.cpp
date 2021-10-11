@@ -208,7 +208,7 @@ void YangRtcPublish::startLoop() {
 			}
 
 		}
-	//	tmpsrc = NULL;
+
 
 	}			//end
 	isPublished = 0;

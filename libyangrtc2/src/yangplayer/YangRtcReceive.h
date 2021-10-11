@@ -2,15 +2,18 @@
 #define SRC_YANGPLAYER_SRC_YANGRTCRECEIVE_H_
 #include <yangutil/yangavinfotype.h>
 #include <string>
-#include "yangutil/buffer/YangAudioEncoderBuffer.h"
-#include "yangutil/buffer/YangVideoDecoderBuffer.h"
-#include "yangwebrtc/YangRtcHandle.h"
-#include "yangutil/sys/YangThread.h"
+#include <yangutil/sys/YangSysMessageI.h>
+#include <yangutil/buffer/YangAudioEncoderBuffer.h>
+#include <yangutil/buffer/YangVideoDecoderBuffer.h>
+#include <yangwebrtc/YangRtcHandle.h>
+#include <yangutil/sys/YangThread.h>
+
+
 
 using namespace std;
 class YangRtcReceive : public YangThread, public YangReceiveCallback,public YangMediaConfigCallback{
 public:
-	YangRtcReceive(YangContext* pcontext);
+	YangRtcReceive(YangContext* pcontext,YangSysMessageI* pmessage);
 	virtual ~YangRtcReceive();
 	void receiveAudio(YangFrame* audioFrame);
 	void receiveVideo(YangFrame* videoFrame);
@@ -28,6 +31,7 @@ protected:
 	void run();
 	void startLoop();
 	YangContext* m_context;
+	YangSysMessageI* m_message;
 
 
 

@@ -14,7 +14,6 @@ using namespace std;
 
 YangStunPacket::YangStunPacket()
 {
-
     m_message_type = 0;
     m_local_ufrag = "";
     m_remote_ufrag = "";

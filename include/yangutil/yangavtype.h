@@ -64,12 +64,12 @@ struct YangAudioParam{
 	YangAudioEncDecType encode;
 	int32_t sample;
 	int32_t channel;
-        int32_t clock;
+    int32_t audioClock;
 };
 
 struct YangVideoParam{
 	YangVideoEncDecType encode;
-	int32_t clock;
+	int32_t videoClock;
 
 };
 struct YangFrame{

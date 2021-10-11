@@ -10,7 +10,7 @@ YangRtcPlayStream::YangRtcPlayStream(YangRtcSessionI *psession) {
 	m_session = psession;
 	m_request_keyframe = false;
 	m_nn_simulate_nack_drop = 0;
-    m_nack_enabled = true;
+	m_nack_enabled = true;
 
 	m_pt_to_drop = 0;
 	m_twcc_enabled = false;
@@ -26,13 +26,13 @@ YangRtcPlayStream::~YangRtcPlayStream() {
 	m_conf = NULL;
 	for (int32_t i = 0; i < (int) m_video_tracks.size(); ++i) {
 		YangRtcVideoRecvTrack *track = m_video_tracks.at(i);
-		yang_freep(track);
+		yang_delete(track);
 	}
 	m_video_tracks.clear();
 
 	for (int32_t i = 0; i < (int) m_audio_tracks.size(); ++i) {
 		YangRtcAudioRecvTrack *track = m_audio_tracks.at(i);
-		yang_freep(track);
+		yang_delete(track);
 	}
 	m_audio_tracks.clear();
 
@@ -48,16 +48,17 @@ int32_t YangRtcPlayStream::initialize(YangRtcContext *conf,
 	m_mixQueue.setVideoSize(conf->context->rtc.videoQueueCount);
 	if (stream_desc->audio_track_desc_) {
 		m_audio_tracks.push_back(
-				new YangRtcAudioRecvTrack(conf->streamConf->uid, conf,m_session,
-						stream_desc->audio_track_desc_, rtpBuffer,&m_mixQueue));
+				new YangRtcAudioRecvTrack(conf->streamConf->uid, conf,
+						m_session, stream_desc->audio_track_desc_, rtpBuffer,
+						&m_mixQueue));
 
 	}
 
 	for (int32_t i = 0; i < (int) stream_desc->video_track_descs_.size(); ++i) {
 		YangRtcTrack *desc = stream_desc->video_track_descs_.at(i);
 		m_video_tracks.push_back(
-				new YangRtcVideoRecvTrack(conf->streamConf->uid, conf,m_session,
-						desc, rtpBuffer,&m_mixQueue));
+				new YangRtcVideoRecvTrack(conf->streamConf->uid, conf,
+						m_session, desc, rtpBuffer, &m_mixQueue));
 	}
 
 	int32_t twcc_id = -1;
@@ -157,22 +158,22 @@ int32_t YangRtcPlayStream::on_twcc(uint16_t sn) {
 
 int32_t YangRtcPlayStream::on_rtp(char *data, int32_t nb_data) {
 	int32_t err = Yang_Ok;
-/**
-	if (m_twcc_id) {
+	/**
+	 if (m_twcc_id) {
 	 // We must parse the TWCC from RTP header before SRTP unprotect, because:
 	 //      1. Client may send some padding packets with invalid SequenceNumber, which causes the SRTP fail.
 	 //      2. Server may send multiple duplicated NACK to client, and got more than one ARQ packet, which also fail SRTP.
 	 // so, we must parse the header before SRTP unprotect(which may fail and drop packet).
 
-		 uint16_t twcc_sn = 0;
-		 if ((err = yang_rtp_fast_parse_twcc(data, nb_data, m_twcc_id, twcc_sn))== Yang_Ok) {
-			 printf("twcc_%hu,",twcc_sn);
-			 if((err = on_twcc(twcc_sn)) != Yang_Ok) {
-			 return yang_error_wrap(err, "on twcc");
-			 }
-		 }
-	}
-**/
+	 uint16_t twcc_sn = 0;
+	 if ((err = yang_rtp_fast_parse_twcc(data, nb_data, m_twcc_id, twcc_sn))== Yang_Ok) {
+	 printf("twcc_%hu,",twcc_sn);
+	 if((err = on_twcc(twcc_sn)) != Yang_Ok) {
+	 return yang_error_wrap(err, "on twcc");
+	 }
+	 }
+	 }
+	 **/
 
 	char *plaintext = data;
 	int32_t nb_plaintext = nb_data;
@@ -220,7 +221,7 @@ int32_t YangRtcPlayStream::on_rtp_plaintext(char *plaintext,
 	err = do_on_rtp_plaintext(pkt, &buf);
 	// Free the packet.
 	// @remark Note that the pkt might be set to NULL.
-	yang_freep(pkt);
+	yang_delete(pkt);
 	return err;
 }
 
@@ -235,7 +236,6 @@ int32_t YangRtcPlayStream::do_on_rtp_plaintext(YangRtpPacket *pkt,
 	if ((err = pkt->decode(buf)) != Yang_Ok) {
 		return yang_error_wrap(err, "decode rtp packet");
 	}
-
 
 	uint32_t ssrc = pkt->m_header.get_ssrc();
 	YangRtcAudioRecvTrack *audio_track = get_audio_track(ssrc);
@@ -393,7 +393,7 @@ int32_t YangRtcPlayStream::on_rtcp_sr(YangRtcpSR *rtcp) {
 	//  yang_debug("sender report, ssrc_of_sender=%u, rtp_time=%u, sender_packet_count=%u, sender_octec_count=%u",
 	//  rtcp->get_ssrc(), rtcp->get_rtp_ts(), rtcp->get_rtp_send_packets(), rtcp->get_rtp_send_bytes());
 
-	update_send_report_time(rtcp->get_ssrc(), yang_ntp,rtcp->get_rtp_ts());
+	update_send_report_time(rtcp->get_ssrc(), yang_ntp, rtcp->get_rtp_ts());
 
 	return err;
 }
@@ -448,8 +448,8 @@ int32_t YangRtcPlayStream::on_rtcp_xr(YangRtcpXr *rtcp) {
 
 				YangNtp cur_ntp = YangNtp::from_time_ms(
 				yang_update_system_time() / 1000);
-				uint32_t compact_ntp = (cur_ntp.ntp_second_ << 16)
-						| (cur_ntp.ntp_fractions_ >> 16);
+				uint32_t compact_ntp = (cur_ntp.m_ntp_second << 16)
+						| (cur_ntp.m_ntp_fractions >> 16);
 
 				int32_t rtt_ntp = compact_ntp - lrr - dlrr;
 				int32_t rtt = ((rtt_ntp * 1000) >> 16)
@@ -476,7 +476,6 @@ void YangRtcPlayStream::simulate_nack_drop(int32_t nn) {
 void YangRtcPlayStream::simulate_drop_packet(YangRtpHeader *h,
 		int32_t nn_bytes) {
 
-
 	m_nn_simulate_nack_drop--;
 }
 
@@ -496,18 +495,18 @@ void YangRtcPlayStream::update_send_report_time(uint32_t ssrc,
 		const YangNtp &ntp, uint32_t rtp_time) {
 	YangRtcVideoRecvTrack *video_track = get_video_track(ssrc);
 	if (video_track) {
-		return video_track->update_send_report_time(ntp,rtp_time);
+		return video_track->update_send_report_time(ntp, rtp_time);
 	}
 
 	YangRtcAudioRecvTrack *audio_track = get_audio_track(ssrc);
 	if (audio_track) {
-		return audio_track->update_send_report_time(ntp,rtp_time);
+		return audio_track->update_send_report_time(ntp, rtp_time);
 	}
 }
 
-YangRecvTrack::YangRecvTrack(int32_t uid, YangRtcContext* conf,YangRtcSessionI *session,
-		YangRtcTrack *ptrack_desc, YangRtpBuffer *rtpBuffer,
-		YangMixQueue *pmixque, bool is_audio) {
+YangRecvTrack::YangRecvTrack(int32_t uid, YangRtcContext *conf,
+		YangRtcSessionI *session, YangRtcTrack *ptrack_desc,
+		YangRtpBuffer *rtpBuffer, YangMixQueue *pmixque, bool is_audio) {
 	m_uid = uid;
 	m_session = session;
 	m_track_desc = ptrack_desc->copy();
@@ -520,20 +519,20 @@ YangRecvTrack::YangRecvTrack(int32_t uid, YangRtcContext* conf,YangRtcSessionI *
 		m_rtp_queue = new YangRtpRingBuffer(1000);
 		m_nack_receiver = new YangRtpNackForReceiver(m_rtp_queue, 1000 * 2 / 3);
 	}
-	  m_last_sender_report_rtp_time = 0;
-	  m_last_sender_report_rtp_time1 = 0;
+	m_last_sender_report_rtp_time = 0;
+	m_last_sender_report_rtp_time1 = 0;
 
 	m_last_sender_report_sys_time = 0;
 	m_recvcb = NULL;
 	m_mixQueue = pmixque;
-	m_conf=conf;
-	m_usingMixav=m_conf->context->rtc.mixAvqueue;
+	m_conf = conf;
+	m_usingMixav = m_conf->context->rtc.mixAvqueue;
 }
 
 YangRecvTrack::~YangRecvTrack() {
-	yang_freep(m_rtp_queue);
-	yang_freep(m_nack_receiver);
-	yang_freep(m_track_desc);
+	yang_delete(m_rtp_queue);
+	yang_delete(m_nack_receiver);
+	yang_delete(m_track_desc);
 	m_recvcb = NULL;
 }
 void YangRecvTrack::setReceiveCallback(YangReceiveCallback *cbk) {
@@ -551,53 +550,56 @@ void YangRecvTrack::update_rtt(int32_t rtt) {
 	m_nack_receiver->update_rtt(rtt);
 }
 
-void YangRecvTrack::update_send_report_time(const YangNtp &ntp, uint32_t rtp_time) {
-	  m_last_sender_report_ntp1 = m_last_sender_report_ntp;
-	    m_last_sender_report_rtp_time1 = m_last_sender_report_rtp_time;
+void YangRecvTrack::update_send_report_time(const YangNtp &ntp,
+		uint32_t rtp_time) {
+	m_last_sender_report_ntp1 = m_last_sender_report_ntp;
+	m_last_sender_report_rtp_time1 = m_last_sender_report_rtp_time;
 
-	m_last_sender_report_ntp= ntp;
+	m_last_sender_report_ntp = ntp;
 	m_last_sender_report_rtp_time = rtp_time;
 
 	m_last_sender_report_sys_time = yang_update_system_time();
 }
 
-int64_t YangRecvTrack::cal_avsync_time(uint32_t rtp_time)
-{
-    // Have no recv at least 2 sender reports, can't calculate sync time.
-    // TODO: FIXME: use the sample rate from sdp.
-	return (int64_t)rtp_time;
-    if (m_last_sender_report_rtp_time1 <= 0) {
-        return -1;
-    }
+int64_t YangRecvTrack::cal_avsync_time(uint32_t rtp_time) {
+	// Have no recv at least 2 sender reports, can't calculate sync time.
+	// TODO: FIXME: use the sample rate from sdp.
+	return (int64_t) rtp_time;
+	if (m_last_sender_report_rtp_time1 <= 0) {
+		return -1;
+	}
 
-    // WebRTC using sender report to sync audio/video timestamp, because audio video have different timebase,
-    // typical audio opus is 48000Hz, video is 90000Hz.
-    // We using two sender report point to calculate avsync timestamp(clock time) with any given rtp timestamp.
-    // For example, there are two history sender report of audio as below.
-    //   sender_report1: rtp_time1 = 10000, ntp_time1 = 40000
-    //   sender_report : rtp_time  = 10960, ntp_time  = 40020
-    //   (rtp_time - rtp_time1) / (ntp_time - ntp_time1) = 960 / 20 = 48,
-    // Now we can calcualte ntp time(ntp_x) of any given rtp timestamp(rtp_x),
-    //   (rtp_x - rtp_time) / (ntp_x - ntp_time) = 48   =>   ntp_x = (rtp_x - rtp_time) / 48 + ntp_time;
-    double sys_time_elapsed = static_cast<double>(m_last_sender_report_ntp.system_ms_) - static_cast<double>(m_last_sender_report_ntp1.system_ms_);
+	// WebRTC using sender report to sync audio/video timestamp, because audio video have different timebase,
+	// typical audio opus is 48000Hz, video is 90000Hz.
+	// We using two sender report point to calculate avsync timestamp(clock time) with any given rtp timestamp.
+	// For example, there are two history sender report of audio as below.
+	//   sender_report1: rtp_time1 = 10000, ntp_time1 = 40000
+	//   sender_report : rtp_time  = 10960, ntp_time  = 40020
+	//   (rtp_time - rtp_time1) / (ntp_time - ntp_time1) = 960 / 20 = 48,
+	// Now we can calcualte ntp time(ntp_x) of any given rtp timestamp(rtp_x),
+	//   (rtp_x - rtp_time) / (ntp_x - ntp_time) = 48   =>   ntp_x = (rtp_x - rtp_time) / 48 + ntp_time;
+	double sys_time_elapsed =
+			static_cast<double>(m_last_sender_report_ntp.m_system_ms)
+					- static_cast<double>(m_last_sender_report_ntp1.m_system_ms);
 
-    // Check sys_time_elapsed is equal to zero.
-    if (fpclassify(sys_time_elapsed) == FP_ZERO) {
-        return -1;
-    }
+	// Check sys_time_elapsed is equal to zero.
+	if (fpclassify(sys_time_elapsed) == FP_ZERO) {
+		return -1;
+	}
 
-    double rtp_time_elpased = static_cast<double>(m_last_sender_report_rtp_time) - static_cast<double>(m_last_sender_report_rtp_time1);
-    int rate = round(rtp_time_elpased / sys_time_elapsed);
+	double rtp_time_elpased = static_cast<double>(m_last_sender_report_rtp_time)
+			- static_cast<double>(m_last_sender_report_rtp_time1);
+	int rate = round(rtp_time_elpased / sys_time_elapsed);
 
-    if (rate <= 0) {
-        return -1;
-    }
+	if (rate <= 0) {
+		return -1;
+	}
 
-    double delta = round((rtp_time - m_last_sender_report_rtp_time) / rate);
+	double delta = round((rtp_time - m_last_sender_report_rtp_time) / rate);
 
-    int64_t avsync_time = delta + m_last_sender_report_ntp.system_ms_;
+	int64_t avsync_time = delta + m_last_sender_report_ntp.m_system_ms;
 
-    return avsync_time;
+	return avsync_time;
 }
 int32_t YangRecvTrack::send_rtcp_rr() {
 	int32_t err = Yang_Ok;
@@ -644,8 +646,8 @@ int32_t YangRecvTrack::on_nack(YangRtpPacket *pkt) {
 				m_rtp_queue->m_begin, m_rtp_queue->m_end);
 	}
 	if (yang_rtp_seq_distance(nack_first, nack_last) > 0) {
-		yang_trace("\nNACK: update seq=%u, nack range [%u, %u]", seq, nack_first,
-				nack_last);
+		yang_trace("\nNACK: update seq=%u, nack range [%u, %u]", seq,
+				nack_first, nack_last);
 		m_nack_receiver->insert(nack_first, nack_last);
 		m_nack_receiver->check_queue_size();
 	}
@@ -656,42 +658,55 @@ int32_t YangRecvTrack::on_nack(YangRtpPacket *pkt) {
 }
 
 int32_t YangRecvTrack::do_check_send_nacks(uint32_t &timeout_nacks) {
-    //int32_t err = Yang_Ok;
+	//int32_t err = Yang_Ok;
 
 	uint32_t sent_nacks = 0;
 
-    return m_session->check_send_nacks(m_nack_receiver, m_track_desc->ssrc_,
+	return m_session->check_send_nacks(m_nack_receiver, m_track_desc->ssrc_,
 			sent_nacks, timeout_nacks);
 
-    //return err;
+	//return err;
 }
 void YangRecvTrack::on_audio_data(YangMessage *msg) {
 	m_audioFrame.uid = m_uid;
-    m_audioFrame.payload =(uint8_t*) msg->payload;
+	m_audioFrame.payload = (uint8_t*) msg->payload;
 	m_audioFrame.nb = msg->nb;
 	m_audioFrame.timestamp = msg->timestamp;
 	if (m_recvcb)
 		m_recvcb->receiveAudio(&m_audioFrame);
-	//printf("a%ld,",m_audioFrame.timestamp);
+
 	yang_delete(msg);
 }
 void YangRecvTrack::on_video_data(YangMessage *msg) {
 	m_videoFrame.uid = m_uid;
-    m_videoFrame.payload = (uint8_t*) msg->payload;
+	m_videoFrame.payload = (uint8_t*) msg->payload;
 	m_videoFrame.nb = msg->nb;
 	m_videoFrame.timestamp = msg->timestamp;
 	if (m_recvcb)
 		m_recvcb->receiveVideo(&m_videoFrame);
 	yang_deleteA(msg->payload);
-	if(msg) delete msg;
+	if (msg)
+		delete msg;
 }
-YangRtcAudioRecvTrack::YangRtcAudioRecvTrack(int32_t uid,YangRtcContext* conf,
+YangRtcAudioRecvTrack::YangRtcAudioRecvTrack(int32_t uid, YangRtcContext *conf,
 		YangRtcSessionI *session, YangRtcTrack *track_desc,
 		YangRtpBuffer *rtpBuffer, YangMixQueue *pmixque) :
-		YangRecvTrack(uid, conf,session, track_desc, rtpBuffer, pmixque, true) {
+		YangRecvTrack(uid, conf, session, track_desc, rtpBuffer, pmixque, true) {
+	m_audioCacheSize = 3;
+	m_aduioBuffer = NULL;
+	if (conf->context->rtc.mixAvqueue == 0) {
+		m_aduioBuffer = new YangRtpBuffer(m_audioCacheSize + 1, 5 * 512);
+	}
 }
 
 YangRtcAudioRecvTrack::~YangRtcAudioRecvTrack() {
+	for (std::map<int64_t, YangRtpPacket*>::iterator it = m_audioMap.begin();
+			it != m_audioMap.end(); ++it) {
+		yang_delete(it->second);
+	}
+	if (!m_audioMap.empty())
+		m_audioMap.clear();
+	yang_delete(m_aduioBuffer);
 }
 
 void YangRtcAudioRecvTrack::on_before_decode_payload(YangRtpPacket *pkt,
@@ -705,61 +720,94 @@ void YangRtcAudioRecvTrack::on_before_decode_payload(YangRtpPacket *pkt,
 	*ppayload = new YangRtpRawPayload();
 	*ppt = YangRtspPacketPayloadTypeRaw;
 }
-
-int32_t YangRtcAudioRecvTrack::on_rtp(YangRtpPacket *pkt) {
-	int32_t err = Yang_Ok;
-	//pkt->set_avsync_time(cal_avsync_time(pkt->m_header.get_timestamp()));
-	pkt->set_avsync_time(pkt->m_header.get_timestamp());
-
+int32_t YangRtcAudioRecvTrack::on_mixrtp(YangRtpPacket *pkt) {
+	YangMessage *prt = new YangMessage();
 	YangRtpRawPayload *payload =
 			dynamic_cast<YangRtpRawPayload*>(pkt->payload());
-	if(m_usingMixav){
-		YangMessage *prt = new YangMessage();
+	prt->mediaType = 0;
+	prt->nb = payload->m_nn_payload;
+	prt->timestamp = pkt->get_avsync_time();
+	prt->payload = payload->m_payload;
+	m_mixQueue->push(prt);
+	YangMessage *msg = m_mixQueue->pop();
+	if (msg == NULL)
+		return Yang_Ok;
+	if (msg->mediaType) {
+		on_video_data(msg);
 
-		prt->mediaType = 0;
-		prt->nb = payload->m_nn_payload;
-		prt->timestamp = pkt->get_avsync_time();
-		prt->payload =  payload->m_payload;
-		m_mixQueue->push(prt);
-		YangMessage *msg = m_mixQueue->pop();
-		if (msg == NULL)
-			return Yang_Ok;
-		if (msg->mediaType) {
-			 on_video_data(msg);
-
-		} else {
-			 on_audio_data(msg);
-		}
-	}else{
-		m_audioFrame.uid = m_uid;
-		m_audioFrame.payload = (uint8_t*) payload->m_payload;
-		m_audioFrame.nb =  payload->m_nn_payload;
-		m_audioFrame.timestamp = pkt->get_avsync_time();
-		if (m_recvcb)			m_recvcb->receiveAudio(&m_audioFrame);
+	} else {
+		on_audio_data(msg);
 	}
+	return Yang_Ok;
+}
+
+YangRtpPacket* YangRtcAudioRecvTrack::get_audiortp(YangRtpPacket *src){
+	if (m_audioMap.find(src->get_avsync_time()) != m_audioMap.end()) {
+		return NULL;
+	}
+
+	YangRtpPacket *rtpkt = src->copy();
+	YangRtpRawPayload *tpayload1 =dynamic_cast<YangRtpRawPayload*>(rtpkt->payload());
+
+	char *tmp = tpayload1->m_payload;
+	tpayload1->m_payload = m_aduioBuffer->getBuffer();
+	memcpy(tpayload1->m_payload, tmp, tpayload1->m_nn_payload);
+
+	m_audioMap[rtpkt->get_avsync_time()] = rtpkt;
+
+
+	if (m_audioMap.size() <= m_audioCacheSize) return NULL;
+
+	map<int64_t,YangRtpPacket*>::iterator iter=m_audioMap.begin();
+	YangRtpPacket* apkt=iter->second;
+	m_audioMap.erase(iter);
+
+	return apkt;
+}
+int32_t YangRtcAudioRecvTrack::on_rtp(YangRtpPacket *ppkt) {
+	int32_t err = Yang_Ok;
+	//pkt->set_avsync_time(cal_avsync_time(pkt->m_header.get_timestamp()));
+	ppkt->set_avsync_time(ppkt->m_header.get_timestamp());
+
+	//if(m_usingMixav) return on_mixrtp(ppkt);
+
+
+	YangRtpPacket *pkt = get_audiortp(ppkt);
+	if(!pkt) return err;
+	YangRtpRawPayload *tpayload = dynamic_cast<YangRtpRawPayload*>(pkt->payload());
+	if (tpayload){
+		m_audioFrame.uid = m_uid;
+		m_audioFrame.payload = (uint8_t*) tpayload->m_payload;
+		m_audioFrame.nb = tpayload->m_nn_payload;
+		m_audioFrame.timestamp = pkt->get_avsync_time();
+
+		if (m_recvcb)	m_recvcb->receiveAudio(&m_audioFrame);
+	}
+
+	yang_delete(pkt);
+
+
 	return err;
 }
 
 int32_t YangRtcAudioRecvTrack::check_send_nacks() {
 	int32_t err = Yang_Ok;
-    uint32_t timeout_nacks = 0;
-    do_check_send_nacks(timeout_nacks);
-    //uint32_t timeout_nacks = 0;
-    //if ((err = do_check_send_nacks(timeout_nacks)) != Yang_Ok) {
-        //return yang_error_wrap(err, "audio");
-    //}
+	uint32_t timeout_nacks = 0;
+	if ((err = do_check_send_nacks(timeout_nacks)) != Yang_Ok) {
+		return yang_error_wrap(err, "audio");
+	}
 
 	return err;
 }
 
-YangRtcVideoRecvTrack::YangRtcVideoRecvTrack(int32_t uid,YangRtcContext* conf,
+YangRtcVideoRecvTrack::YangRtcVideoRecvTrack(int32_t uid, YangRtcContext *conf,
 		YangRtcSessionI *session, YangRtcTrack *track_desc,
 		YangRtpBuffer *rtpBuffer, YangMixQueue *pmixque) :
-		YangRecvTrack(uid, conf,session, track_desc, rtpBuffer, pmixque, false) {
+		YangRecvTrack(uid, conf, session, track_desc, rtpBuffer, pmixque, false) {
 	m_key_frame_ts = -1;
 	m_lost_sn = 0;
 	m_header_sn = 0;
-    m_hasRequestKeyframe = false;
+	m_hasRequestKeyframe = false;
 	memset(m_cache_video_pkts, 0, sizeof(m_cache_video_pkts));
 }
 
@@ -789,7 +837,7 @@ void YangRtcVideoRecvTrack::on_before_decode_payload(YangRtpPacket *pkt,
 		*ppt = YangRtspPacketPayloadTypeRaw;
 	}
 }
-//int t_base=0;
+
 int32_t YangRtcVideoRecvTrack::packet_video(const uint16_t start,
 		const uint16_t end) {
 	int32_t err = Yang_Ok;
@@ -843,12 +891,8 @@ int32_t YangRtcVideoRecvTrack::packet_video(const uint16_t start,
 	char *buf = new char[nb_payload];
 	int32_t bufLen = nb_payload;
 
-
-
 	YangRtpPacket *header = m_cache_video_pkts[cache_index(start)].m_pkt;
 	YangBuffer payload(buf, bufLen);
-
-
 
 	if (header->is_keyframe()) {
 		payload.write_1bytes(0x17); // type(4 bits): key frame; code(4bits): avc
@@ -884,7 +928,6 @@ int32_t YangRtcVideoRecvTrack::packet_video(const uint16_t start,
 				payload.write_bytes(fua_payload->m_payload,
 						fua_payload->m_size);
 
-
 			} else {
 				nalu_len += fua_payload->m_size;
 				payload.write_bytes(fua_payload->m_payload,
@@ -897,7 +940,7 @@ int32_t YangRtcVideoRecvTrack::packet_video(const uint16_t start,
 					payload.skip(nalu_len);
 				}
 			}
-			yang_freep(pkt);
+			yang_delete(pkt);
 			continue;
 		}
 
@@ -913,7 +956,7 @@ int32_t YangRtcVideoRecvTrack::packet_video(const uint16_t start,
 
 				}
 			}
-			yang_freep(pkt);
+			yang_delete(pkt);
 			continue;
 		}
 
@@ -924,15 +967,15 @@ int32_t YangRtcVideoRecvTrack::packet_video(const uint16_t start,
 			payload.write_bytes(raw_payload->m_payload,
 					raw_payload->m_nn_payload);
 
-			yang_freep(pkt);
+			yang_delete(pkt);
 			continue;
 		}
 
-		yang_freep(pkt);
+		yang_delete(pkt);
 	}
 
 	if ((err = put_frame_video(buf, timestamp, bufLen)) != Yang_Ok) {
-		   yang_warn("fail to pack video frame");
+		yang_warn("fail to pack video frame");
 	}
 
 	m_header_sn = end + 1;
@@ -1044,42 +1087,44 @@ int32_t YangRtcVideoRecvTrack::packet_video_key_frame(YangRtpPacket *pkt) {
 void YangRtcVideoRecvTrack::clear_cached_video() {
 	for (size_t i = 0; i < s_cache_size; i++) {
 		if (m_cache_video_pkts[i].m_in_use) {
-			yang_freep(m_cache_video_pkts[i].m_pkt);
+			yang_delete(m_cache_video_pkts[i].m_pkt);
 			m_cache_video_pkts[i].m_sn = 0;
 			m_cache_video_pkts[i].m_ts = 0;
 			m_cache_video_pkts[i].m_in_use = false;
 		}
 	}
 }
+int32_t YangRtcVideoRecvTrack::put_frame_mixvideo(char *p, int64_t timestamp,
+		int32_t nb) {
+	YangMessage *prt = new YangMessage();
+	prt->mediaType = 1;
+	prt->nb = nb;
+	prt->timestamp = timestamp;
+	prt->payload = p;
+	m_mixQueue->push(prt);
+	YangMessage *msg = m_mixQueue->pop();
+	if (msg == NULL)
+		return Yang_Ok;
+	if (msg->mediaType) {
+		on_video_data(msg);
 
+	} else {
+		on_audio_data(msg);
+	}
+	return Yang_Ok;
+}
 int32_t YangRtcVideoRecvTrack::put_frame_video(char *p, int64_t timestamp,
 		int32_t nb) {
 
-	if(m_usingMixav){
-		YangMessage *prt = new YangMessage();
-		prt->mediaType = 1;
-		prt->nb = nb;
-		prt->timestamp = timestamp;
-		prt->payload = p;
-		m_mixQueue->push(prt);
-		YangMessage *msg = m_mixQueue->pop();
-		if (msg == NULL)
-			return Yang_Ok;
-		if (msg->mediaType) {
-			on_video_data(msg);
+	//if(m_usingMixav) return put_frame_mixvideo(p,timestamp,nb);
 
-		} else {
-			on_audio_data(msg);
-		}
-	}else{
-		m_videoFrame.uid = m_uid;
-        m_videoFrame.payload = (uint8_t*)p;
-		m_videoFrame.nb = nb;
-		m_videoFrame.timestamp = timestamp;
-			if (m_recvcb)
-				m_recvcb->receiveVideo(&m_videoFrame);
-            yang_deleteA(p);
-	}
+	m_videoFrame.uid = m_uid;
+	m_videoFrame.payload = (uint8_t*) p;
+	m_videoFrame.nb = nb;
+	m_videoFrame.timestamp = timestamp;
+	if (m_recvcb)
+		m_recvcb->receiveVideo(&m_videoFrame);
+	yang_deleteA(p);
 
 	return Yang_Ok;
 }
@@ -1129,18 +1174,17 @@ int32_t YangRtcVideoRecvTrack::find_next_lost_sn(uint16_t current_sn,
 		}
 	}
 
-	yang_error(
-			"the cache is mess. the packet count of video frame is more than %u",
+	yang_error("the cache is mess. the packet count of video frame is more than %u",
 			s_cache_size);
 	return -2;
 }
 
 int32_t YangRtcVideoRecvTrack::on_rtp(YangRtpPacket *src) {
 	int32_t err = Yang_Ok;
-    if (!m_hasRequestKeyframe) {
-        m_session->send_rtcp_fb_pli(m_track_desc->ssrc_);
-        m_hasRequestKeyframe = true;
-    }
+	if (!m_hasRequestKeyframe) {
+		m_session->send_rtcp_fb_pli(m_track_desc->ssrc_);
+		m_hasRequestKeyframe = true;
+	}
 
 	src->set_avsync_time(src->m_header.get_timestamp());
 
@@ -1163,7 +1207,7 @@ int32_t YangRtcVideoRecvTrack::on_rtp(YangRtpPacket *src) {
 		uint16_t tail_sn = 0;
 		int32_t sn = find_next_lost_sn(m_lost_sn, tail_sn);
 		if (-1 == sn) {
-            if (check_frame_complete(m_header_sn, tail_sn)) {
+			if (check_frame_complete(m_header_sn, tail_sn)) {
 				if ((err = packet_video(m_header_sn, tail_sn)) != Yang_Ok) {
 					err = yang_error_wrap(err, "fail to pack video frame");
 				}
@@ -1175,29 +1219,22 @@ int32_t YangRtcVideoRecvTrack::on_rtp(YangRtpPacket *src) {
 			m_lost_sn = (uint16_t) sn;
 		}
 	}
-	//if (nack_enabled_)
 
 	return err;
 }
-
-
 
 int32_t YangRtcVideoRecvTrack::check_send_nacks() {
 	int32_t err = Yang_Ok;
 
 	uint32_t timeout_nacks = 0;
-    do_check_send_nacks(timeout_nacks);
 
-    //if ((err = do_check_send_nacks(timeout_nacks)) != Yang_Ok) {
-        //return yang_error_wrap(err, "video");
-    //}
-
+	if ((err = do_check_send_nacks(timeout_nacks)) != Yang_Ok) {
+		return yang_error_wrap(err, "video");
+	}
 
 	if (timeout_nacks == 0) {
 		return err;
 	}
-
-
 
 	return err;
 }

@@ -2,7 +2,8 @@
 
 #include <yangutil/yang_unistd.h>
 #include <yangutil/sys/YangLog.h>
-YangRtcReceive::YangRtcReceive(YangContext* pcontext) {
+YangRtcReceive::YangRtcReceive(YangContext* pcontext,YangSysMessageI* pmessage) {
+	m_message=pmessage;
 	m_context=pcontext;
 	m_isStart = 0;
 	m_out_videoBuffer = NULL;
@@ -28,9 +29,10 @@ YangRtcReceive::~YangRtcReceive() {
 	}
 	yang_delete(m_recv);
 
-	//yang_deleteA(m_keyBuf);
+
 	m_out_audioBuffer = NULL;
 	m_out_videoBuffer = NULL;
+	m_message=NULL;
 	pthread_mutex_destroy(&m_lock);
 	pthread_cond_destroy(&m_cond_mess);
 }
@@ -155,8 +157,12 @@ void YangRtcReceive::startLoop() {
 	yang_reindex(m_out_videoBuffer);
 	m_loops = 1;
 	m_isReceived = 1;
-	if (m_recv->connectRtcServer()) {
-
+	int err=Yang_Ok;
+	if ((err=m_recv->connectRtcServer())!=Yang_Ok) {
+		m_loops=0;
+		if(m_message) m_message->failure(err);
+	}else{
+		if(m_message) m_message->success();
 	}
 
 	pthread_mutex_lock(&m_lock);

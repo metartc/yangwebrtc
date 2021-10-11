@@ -72,4 +72,6 @@ int64_t YangVideoBuffer::getTimestamp(int64_t *ptimestamp){
 int64_t YangVideoBuffer::getNextTimestamp(){
 	return getNextFrameTimestamp();
 }
-
+YangFrame* YangVideoBuffer::getCurVideoFrame(){
+	return getCurFrameRef();
+}

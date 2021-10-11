@@ -1779,7 +1779,7 @@ int32_t YangRtcpCompound::decode(YangBuffer *buffer)
         }
 
         if(Yang_Ok != (err = rtcp->decode(buffer))) {
-            yang_freep(rtcp);
+            yang_delete(rtcp);
 
             // @doc https://tools.ietf.org/html/rfc3550#section-6.4.2
             // An empty RR packet (RC = 0) MUST be put at the head of a compound

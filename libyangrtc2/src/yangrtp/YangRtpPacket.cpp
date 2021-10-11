@@ -37,13 +37,7 @@ int32_t YangRtpPacketUtil::on_audio(YangStreamCapture *audioFrame, YangRtpPacket
 int32_t YangRtpPacketUtil::on_h264_video(YangStreamCapture *videoFrame,
 		vector<YangRtpPacket*> &pkts) {
 	int32_t err = Yang_Ok;
-	/**if(videoFrame->getFrametype()==1){
-		YangSpsppsConf* spsconf=videoFrame->getSpsppsConf();
-		if(spsconf){
-			package_single_nalu((char*)spsconf->sps,spsconf->spsLen,videoFrame->getTimestamp(),pkts);
-			package_single_nalu((char*)spsconf->pps,spsconf->ppsLen,videoFrame->getTimestamp(),pkts);
-		}
-	}**/
+
 	if (videoFrame->getVideoLen() <= kRtpMaxPayloadSize) {
 		if ((err = package_single_nalu(videoFrame, pkts)) != Yang_Ok) {
 			return yang_error_wrap(err, "package single nalu");
@@ -78,7 +72,7 @@ int32_t YangRtpPacketUtil::package_single_nalu(YangStreamCapture *videoFrame,
 	YangRtpRawPayload *raw = new YangRtpRawPayload();
 	pkt->set_payload(raw, YangRtspPacketPayloadTypeRaw);
 
-	raw->m_payload = m_rtpBuffer->getBuffer();//(char*) videoFrame->getVideoData();
+	raw->m_payload = m_rtpBuffer->getBuffer();
 	raw->m_nn_payload = videoFrame->getVideoLen();
 	memcpy(raw->m_payload,videoFrame->getVideoData(),raw->m_nn_payload);
 	return err;
@@ -416,7 +410,7 @@ YangRtpPacket::YangRtpPacket() {
 }
 
 YangRtpPacket::~YangRtpPacket() {
-	yang_freep(m_payload);
+	yang_delete(m_payload);
 
 }
 char* YangRtpPacket::wrap(YangRtpBuffer* rtpb,char* data,int32_t nb){
@@ -556,7 +550,7 @@ bool YangRtpPacket::is_keyframe() {
 	} else if (m_nalu_type == kFuA) {
 		YangRtpFUAPayload2 *fua_payload =
 				dynamic_cast<YangRtpFUAPayload2*>(m_payload);
-		// printf("k%d,",fua_payload->nalu_type);
+
 		if (YangAvcNaluTypeIDR == fua_payload->m_nalu_type) {
 
 			return true;
@@ -627,7 +621,7 @@ YangRtpRawNALUs::~YangRtpRawNALUs() {
 	int32_t nn_nalus = (int) m_nalus.size();
 	for (int32_t i = 0; i < nn_nalus; i++) {
 		YangSample *p = m_nalus[i];
-		yang_freep(p);
+		yang_delete(p);
 	}
 }
 
@@ -757,7 +751,7 @@ YangRtpSTAPPayload::~YangRtpSTAPPayload() {
 	int32_t nn_nalus = (int) m_nalus.size();
 	for (int32_t i = 0; i < nn_nalus; i++) {
 		YangSample *p = m_nalus[i];
-		yang_freep(p);
+		yang_delete(p);
 	}
 }
 
@@ -900,7 +894,7 @@ YangRtpFUAPayload::~YangRtpFUAPayload() {
 	int32_t nn_nalus = (int) m_nalus.size();
 	for (int32_t i = 0; i < nn_nalus; i++) {
 		YangSample *p = m_nalus[i];
-		yang_freep(p);
+		yang_delete(p);
 	}
 }
 

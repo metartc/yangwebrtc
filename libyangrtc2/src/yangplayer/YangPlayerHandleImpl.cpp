@@ -1,14 +1,15 @@
-﻿#include "yangutil/sys/YangLog.h"
-#include "yangstream/YangStreamFactory.h"
+﻿#include <yangutil/sys/YangLog.h>
+#include <yangstream/YangStreamFactory.h>
 #include <string>
 #include <string.h>
 #include <yangutil/yang_unistd.h>
 #include "YangPlayerHandleImpl.h"
-YangPlayerHandle* YangPlayerHandle::createPlayerHandle(YangContext* pcontext){
-	return new YangPlayerHandleImpl(pcontext);
+YangPlayerHandle* YangPlayerHandle::createPlayerHandle(YangContext* pcontext,YangSysMessageI* pmessage){
+	return new YangPlayerHandleImpl(pcontext,pmessage);
 }
-YangPlayerHandleImpl::YangPlayerHandleImpl(YangContext* pcontext) {
+YangPlayerHandleImpl::YangPlayerHandleImpl(YangContext* pcontext,YangSysMessageI* pmessage) {
 	m_context=pcontext;
+	m_message=pmessage;
 	m_recv = NULL;
 	m_play = NULL;
 	m_rtcRecv=NULL;
@@ -31,7 +32,7 @@ YangPlayerHandleImpl::~YangPlayerHandleImpl() {
 
 //rtmp://host[:port]/app/stream
 int32_t YangPlayerHandleImpl::parse(std::string purl) {
-	printf("\nurl===============%s\n",purl.c_str());
+
 	char *url = (char*)purl.c_str();
 	char *p = strstr(url, "://");
 	if (!p) {
@@ -144,18 +145,21 @@ void YangPlayerHandleImpl::stopPlay(){
     yang_delete(m_play);
 
 }
-void YangPlayerHandleImpl::play(string url,int32_t localPort) {
-	if(m_url.netType !=Yang_Webrtc){
-		if(parse(url)) return;
-	}
+int YangPlayerHandleImpl::play(string url,int32_t localPort) {
+	m_url.app="";
+	m_url.server="";
+	m_url.stream="";
+	m_url.port=0;
+		if(parse(url)) return 1;
+
 	stopPlay();
 	printf("\nnetType==%d,server=%s,port=%d,app=%s,stream=%s\n",m_url.netType,m_url.server.c_str(),m_url.port,m_url.app.c_str(),m_url.stream.c_str());
 	m_context->sys.transType=m_url.netType;
 	if(m_context->streams.m_playBuffer) m_context->streams.m_playBuffer->setTranstype(m_url.netType);
     if(m_url.netType ==Yang_Webrtc){
 
-        playRtc(0,m_url.server,localPort,m_url.server,1985,m_url.app,m_url.stream);
-        return;
+        return playRtc(0,m_url.server,localPort,m_url.server,1985,m_url.app,m_url.stream);
+
     }
 
 	if (!m_play)	{
@@ -182,10 +186,11 @@ void YangPlayerHandleImpl::play(string url,int32_t localPort) {
 	}
 	if(m_recv->init(m_url.netType, m_url.server, m_url.port, m_url.stream)){
 		printf("\n connect server failure!");
-		return;
+		return 1;
 	}
 
 	m_recv->start();
+	return Yang_Ok;
 
 }
 
@@ -207,14 +212,14 @@ int32_t YangPlayerHandleImpl::playRtc(int32_t puid,std::string localIp,int32_t l
 	m_play->startVideoDecoder(m_outVideoBuffer);
 
 	m_play->startAudioPlay(m_context);
-	//m_play->startVideoPlay();
+
 
 	if(m_rtcRecv==NULL) {
-		m_rtcRecv=new YangRtcReceive(m_context);
+		m_rtcRecv=new YangRtcReceive(m_context,m_message);
 		m_rtcRecv->setBuffer(m_outAudioBuffer, m_outVideoBuffer);
 		m_rtcRecv->init(puid,localIp,localPort,server,pport,app,stream);
 	}
-	 // printf("\nm_rtcRecv is start============%p",m_play);
+
 	 m_rtcRecv->start();
 
 	 return Yang_Ok;

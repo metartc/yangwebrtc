@@ -29,6 +29,7 @@ private:
 	int32_t m_audioLen;
 
 	int64_t atime ;
+	int64_t m_unitAudioTime;
 	double atime1;
 	double perSt ;
 

@@ -4,7 +4,7 @@
 #include <yangstream/YangStreamHandle.h>
 
 #include <yangutil/sys/YangThread.h>
-
+#include <yangutil/sys/YangSysMessageI.h>
 #include <yangutil/buffer/YangAudioEncoderBuffer.h>
 #include <yangutil/buffer/YangVideoEncoderBuffer.h>
 #include <vector>
@@ -13,7 +13,7 @@ class YangRtcPublish: public YangThread,public YangSendRequestCallback {
 public:
 	YangRtcPublish(YangContext *pcontext);
 	virtual ~YangRtcPublish();
-	//int32_t initPublish();
+
 	int32_t init(int32_t nettype, string server,string localIp,int32_t localPort, int32_t pport,
 			string app,string stream);
 	int32_t connectServer(int32_t puid);

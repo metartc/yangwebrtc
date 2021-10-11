@@ -10,7 +10,7 @@
 #include <yangwebrtc/YangRtcHandle.h>
 #include <yangwebrtc/YangRtcContext.h>
 using namespace std;
-//class YangRtcSourceDescription;
+
 class YangRtcHandleImpl:public YangRtcHandle
 {
 public:

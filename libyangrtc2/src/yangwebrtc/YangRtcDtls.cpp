@@ -9,7 +9,7 @@
 #include <yangutil/sys/YangLog.h>
 #include <yangrtp/YangRtpConstant.h>
 #include <yangutil/yangavinfotype.h>
-//#define yang_assert(expression) assert(expression)
+
 
 #include <yangwebrtc/YangRtcDtls.h>
 #ifdef _WIN32
@@ -81,7 +81,7 @@ YangRtcDtls::YangRtcDtls() {
 	m_isStart=0;
 	m_loop=0;
 	m_state=YangDtlsStateInit;
-	 m_srtp = NULL;//new YangSRtp();
+	 m_srtp = NULL;
 }
 
 YangRtcDtls::~YangRtcDtls() {
@@ -112,7 +112,7 @@ int32_t YangRtcDtls::init(YangSendUdpData* pudp) {
 	m_udp=pudp;
 	m_cer=YangCertificate::createCertificate();
 	string role = "actpass";
-	m_sslctx = srs_build_dtls_ctx(m_version, role);
+	m_sslctx = yang_build_dtls_ctx(m_version, role);
 
 	if ((m_ssl = SSL_new(m_sslctx)) == NULL) {
 		printf("\nERROR_OpenSslCreateSSL, SSL_new dtls");
@@ -289,28 +289,29 @@ int32_t YangRtcDtls::get_srtp_key(char* recv_key, int *precvkeylen,char* send_ke
 
 	    size_t offset = 0;
 
-       // std::string client_master_key(reinterpret_cast<char*>(material), SRTP_MASTER_KEY_KEY_LEN);
+
         memcpy(send_key,material,SRTP_MASTER_KEY_KEY_LEN);
 	    offset += SRTP_MASTER_KEY_KEY_LEN;
-       // std::string server_master_key(reinterpret_cast<char*>(material + offset), SRTP_MASTER_KEY_KEY_LEN);
+
         memcpy(recv_key,material+offset,SRTP_MASTER_KEY_KEY_LEN);
 	    offset += SRTP_MASTER_KEY_KEY_LEN;
-       // std::string client_master_salt(reinterpret_cast<char*>(material + offset), SRTP_MASTER_KEY_SALT_LEN);
+
         memcpy(send_key+SRTP_MASTER_KEY_KEY_LEN,material+offset,SRTP_MASTER_KEY_SALT_LEN);
 	    offset += SRTP_MASTER_KEY_SALT_LEN;
-       // std::string server_master_salt(reinterpret_cast<char*>(material + offset), SRTP_MASTER_KEY_SALT_LEN);
+
         memcpy(recv_key+SRTP_MASTER_KEY_KEY_LEN,material+offset,SRTP_MASTER_KEY_SALT_LEN);
-        //recv_key = server_master_key + server_master_salt;
-       // send_key = client_master_key + client_master_salt;
+
 
         *precvkeylen=SRTP_MASTER_KEY_KEY_LEN+SRTP_MASTER_KEY_SALT_LEN;
         *psendkeylen=SRTP_MASTER_KEY_KEY_LEN+SRTP_MASTER_KEY_SALT_LEN;
 	    return err;
 
 }
+
 YangDtlsState YangRtcDtls::getDtlsState(){
 	return m_state;
 }
+
 int32_t YangRtcDtls::on_handshake_done()
 {
     int32_t err = Yang_Ok;
@@ -338,6 +339,7 @@ int32_t YangRtcDtls::on_handshake_done()
 
     return err;
 }
+
 void YangRtcDtls::run() {
 	m_isStart = 1;
     startLoop();
@@ -413,7 +415,7 @@ int32_t YangRtcDtls::startLoop()
 }
 
 
-SSL_CTX* YangRtcDtls::srs_build_dtls_ctx(YangDtlsVersion version, std::string role) {
+SSL_CTX* YangRtcDtls::yang_build_dtls_ctx(YangDtlsVersion version, std::string role) {
 	SSL_CTX *dtls_ctx;
 #if OPENSSL_VERSION_NUMBER < 0x10002000L // v1.0.2
     m_sslctx = SSL_CTX_new(DTLSv1_method());

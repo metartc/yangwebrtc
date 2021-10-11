@@ -277,7 +277,7 @@ int32_t YangRtcHandleImpl::handlePlaySdp() {
 				m_context.remote_audio->encode=Yang_AED_OPUS;
 				m_context.remote_audio->sample=payload.m_clock_rate;
 				m_context.remote_audio->channel=atoi(payload.m_encoding_param.c_str());
-
+				m_context.remote_audio->audioClock=payload.m_clock_rate;
 				// TODO: FIXME: Only support some transport algorithms.
 				for (int32_t k = 0; k < (int) payload.m_rtcp_fb.size(); ++k) {
 					const string &rtcp_fb = payload.m_rtcp_fb.at(k);
@@ -373,7 +373,7 @@ int32_t YangRtcHandleImpl::handlePlaySdp() {
 					video_payload->set_h264_param_desc(
 							payload.m_format_specific_param);
 					m_context.remote_video->encode=Yang_VED_264;
-					m_context.remote_video->clock=payload.m_clock_rate;
+					m_context.remote_video->videoClock=payload.m_clock_rate;
 								//m_conf.audio->channel=atoi(payload.encoding_param_.c_str());
 								// TODO: FIXME: Only support some transport algorithms.
 					for (int32_t k = 0; k < (int) payload.m_rtcp_fb.size(); ++k) {
@@ -441,6 +441,7 @@ int32_t YangRtcHandleImpl::handlePlaySdp() {
 		//track_desc->create_auxiliary_payload(remote_media_desc.find_media_with_encoding_name("ulpfec"));
 
         std::string track_id;
+        bool hasTrack=false;
 		for (int32_t j = 0; j < (int) remote_media_desc.m_ssrc_infos.size(); ++j) {
 			const YangSSRCInfo &ssrc_info = remote_media_desc.m_ssrc_infos.at(j);
 
@@ -457,9 +458,29 @@ int32_t YangRtcHandleImpl::handlePlaySdp() {
 				} else if (remote_media_desc.is_video()) {
 					stream_desc->video_track_descs_.push_back(track_desc_copy);
 				}
+				hasTrack=true;
 			}
             track_id = ssrc_info.m_msid_tracker;
+
         }
+		//rtmp to rtc no msid
+		if(!hasTrack){
+			if( remote_media_desc.m_ssrc_infos.size()>0){
+				const YangSSRCInfo &ssrc_info1 = remote_media_desc.m_ssrc_infos.at(0);
+				YangRtcTrack *track_desc_copy = track_desc->copy();
+								track_desc_copy->ssrc_ = ssrc_info1.m_ssrc;
+								track_desc_copy->id_ = ssrc_info1.m_msid_tracker;
+								track_desc_copy->msid_ = ssrc_info1.m_msid;
+								if (remote_media_desc.is_audio()
+														&& !stream_desc->audio_track_desc_) {
+													stream_desc->audio_track_desc_ = track_desc_copy;
+												} else if (remote_media_desc.is_video()&&stream_desc->video_track_descs_.size()==0) {
+													stream_desc->video_track_descs_.push_back(track_desc_copy);
+												}
+			}
+
+		}
+
 
 		// set track fec_ssrc and rtx_ssrc
 		for (int32_t j = 0; j < (int) remote_media_desc.m_ssrc_groups.size(); ++j) {
@@ -480,7 +501,7 @@ int32_t YangRtcHandleImpl::handlePlaySdp() {
 			}
 		}
 	}
-	printf("remote audioSsrc==%u,video ssrc==%u",stream_desc->audio_track_desc_->ssrc_,stream_desc->video_track_descs_.at(0)->ssrc_);
+
 	if(m_context.context){
 		m_context.context->streams.setMediaConfig(m_context.streamConf->uid,	m_context.remote_audio,m_context.remote_video);
 	}

@@ -7,14 +7,18 @@
 #include <yangavutil/audio/YangAudioMix.h>
 #include <yangutil/buffer/YangVideoBuffer.h>
 
+
 enum YangSynType{
 	YANG_SYNC_AUDIO_MASTER, /* default choice */
 	YANG_SYNC_VIDEO_MASTER,
 	YANG_SYNC_EXTERNAL_CLOCK, /* synchronize to an external clock */
 };
-#define Yang_Max_Audio_Intervaltime 20
-#define Yang_Max_Video_Intervaltime 40
-#define Yang_Video_Cache_time 0
+#define Yang_Max_Audio_Intervaltime 25
+#define Yang_Max_Video_Intervaltime 35
+#define Yang_Video_Base_Update_Interval 600000//10*60*1000  //10m
+#define Yang_Audio_Base_Update_Interval 600000//10*60*1000  //10m
+#define Yang_Video_Cache_time 35
+#define Yang_Audio_Cache_time 0
 class YangSynBuffer //:public YangSynBufferI
 {
 public:
@@ -24,6 +28,8 @@ public:
     int32_t m_width;
     int32_t m_height;
     void setTranstype(int transtype);
+    void setAudioClock(int paudioclock);
+    void setVideoClock(int pvideoclock);
 
 public:
     uint8_t* getVideoRef(YangFrame* pframe);
@@ -39,10 +45,8 @@ public:
     void initClock();
     void setClock();
 
-    //int32_t playAudioFrame(YangFrame* pframe);
-    bool playAudioFrame(int64_t pts);
-    //int32_t playVideoFrame(YangFrame* pframe);
-    int playVideoFrame(int64_t pts);
+    int playAudioFrame(int64_t pts);
+    int playVideoFrame(YangFrame* frame);
     double compute_target_delay(double delay);
     void video_refresh(int32_t pisaudio, double *remaining_time);
     int32_t m_maxAudioMinus;
@@ -52,12 +56,13 @@ private:
     bool m_isFirstAudio;
     int32_t m_video_time_state;
     void updateBaseTimestamp(int64_t pts);
-
+    void updateVideoBaseTimestamp(int64_t pts);
+    void updateAudioBaseTimestamp(int64_t pts);
 private:
-    //YangTime m_time;
-     YangSynType m_synType;
+
+    YangSynType m_synType;
     int32_t m_paused;
-    int64_t m_baseClock,m_startClock;
+    int64_t m_baseClock,m_audio_startClock;
     int32_t m_videoClock;
     int32_t m_audioClock;
 
@@ -70,6 +75,10 @@ private:
     int64_t m_videoTime;
     int32_t m_audioMinus;
     int32_t m_videoMinus;
+    int32_t m_audioNegativeCount;
+    int32_t m_audioTimeoutCount;
+   // int32_t m_keyFrameCount;
+
 
     int64_t m_pre_audioTime;
     int64_t m_pre_videoTime;
@@ -80,12 +89,6 @@ private:
 private:
     YangVideoBuffer *m_videoBuffer;
     YangAudioPlayBuffer* m_audioBuffer;
-
-
-
-
-
-
 };
 
 #endif /* YANGPLAYER_INCLUDE_YANGAVSYN_H_ */

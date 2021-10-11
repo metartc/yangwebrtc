@@ -10,7 +10,7 @@
 #include <yangutil/sys/YangTimer.h>
 using namespace std;
 
-//#define RTMP_SIG_SRS_DOMAIN "ossrs.net"
+
 class YangCertificate;
 class YangSRtp;
 enum YangDtlsRole {
@@ -74,10 +74,8 @@ protected:
     YangDtlsVersion m_version;
 
     bool m_handshake_done;
-    SSL_CTX* srs_build_dtls_ctx(YangDtlsVersion version, std::string role);
+    SSL_CTX* yang_build_dtls_ctx(YangDtlsVersion version, std::string role);
 };
-
-
 
 
 class YangSRtp

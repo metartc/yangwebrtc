@@ -174,7 +174,6 @@ SOURCES += \
     src/yangstream/YangStreamSrt.cpp \
     src/yangstream/YangSynBuffer.cpp \
     src/yangstream/YangVideoStreamCapture.cpp \
-    src/yangutil/TypeCast.cpp \
     src/yangutil/YangAmf.cpp \
     src/yangutil/YangAvinfo.cpp \
     src/yangutil/YangAvtype.cpp \

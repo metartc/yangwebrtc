@@ -9,7 +9,7 @@
 #include <yangutil/sys/YangLog.h>
 
 #include "stdlib.h"
-#ifndef _WIN32
+#if Yang_UsingSo
 void YangH2645VideoDecoderFfmpeg::loadLib() {
 
 	yang_av_frame_alloc = (AVFrame* (*)(void)) m_lib1.loadFunction(
@@ -139,15 +139,7 @@ enum AVPixelFormat get_hw_format1(AVCodecContext *ctx,
 	if(YangH2645VideoDecoderFfmpeg::g_hwType==YangV_Hw_Android) return AV_PIX_FMT_MEDIACODEC;
 	//return AV_PIX_FMT_VAAPI;
 	return AV_PIX_FMT_VAAPI;
-	/** const enum AVPixelFormat *p;
 
-	 for (p = pix_fmts; *p != -1; p++) {
-	 if (*p == hw_pix_fmt)
-	 return *p;
-	 }
-
-	 fprintf(stderr, "Failed to get HW surface format.\n");
-	 return AV_PIX_FMT_NONE;**/
 }
 
 int32_t YangH2645VideoDecoderFfmpeg::set_hwframe_ctx(AVPixelFormat ctxformat,AVPixelFormat swformat,YangVideoInfo *yvp,AVCodecContext *ctx,
@@ -194,7 +186,7 @@ YangH2645VideoDecoderFfmpeg::YangH2645VideoDecoderFfmpeg(YangVideoInfo *pcontext
 
 	g_hwType=(YangVideoHwType)pcontext->videoDecHwType;
 	m_bitDepth=pcontext->bitDepth;
-	//printf("\n*****YangH264Decoder***********************************FFmpeg..%d\n",usingVaapi);
+
 	m_width = 0;
 	m_height = 0;
 	m_frame = NULL;
@@ -207,18 +199,17 @@ YangH2645VideoDecoderFfmpeg::YangH2645VideoDecoderFfmpeg(YangVideoInfo *pcontext
 
 	hw_device_ctx = NULL;
 	frame_mem_gpu = NULL;
-#ifndef _WIN32
+#if Yang_UsingSo
 	unloadLib();
 #endif
-	//m_yvp=NULL;
-	//tmp_frame;
+
 }
 YangH2645VideoDecoderFfmpeg::~YangH2645VideoDecoderFfmpeg() {
 	m_context=NULL;
 	if(m_buffer) delete[] m_buffer;
 	m_buffer=NULL;
 	decode_close();
-#ifndef _WIN32
+#if Yang_UsingSo
 	unloadLib();
 	m_lib.unloadObject();
 	m_lib1.unloadObject();
@@ -273,7 +264,7 @@ void YangH2645VideoDecoderFfmpeg::parseRtmpHeader(uint8_t *p, int32_t pLen, int3
 	if(!m_buffer) m_buffer=new uint8_t[m_width*m_height*3/2];
 
 	int32_t bitLen=(m_bitDepth==8?1:2);
-	//m_yvp->initSdlWin(1,&m_yvp->rects[0], m_width, m_height, 0, 0);
+
 	yLen = m_width * m_height*bitLen;
 	uLen = yLen / 4;
 	allLen = yLen * 3 / 2;
@@ -285,8 +276,7 @@ void YangH2645VideoDecoderFfmpeg::parseRtmpHeader(uint8_t *p, int32_t pLen, int3
 
 	m_codecCtx->width = m_width;
 	m_codecCtx->height = m_height;
-	//m_codecCtx->profile = 66;
-	//avcodec_find_decoder_by_name
+
 	if (usingHw) {
 		AVPixelFormat ctxformat,swformat;
 		if(m_context->videoDecHwType==YangV_Hw_Intel) ctxformat = AV_PIX_FMT_VAAPI;
@@ -315,12 +305,11 @@ void YangH2645VideoDecoderFfmpeg::parseRtmpHeader(uint8_t *p, int32_t pLen, int3
 		fmt=AV_PIX_FMT_P016;
 	}
 	m_frame = yang_av_frame_alloc();
-	// int32_t numBytes = avpicture_get_size(AV_PIX_FMT_YUV420P,m_width,m_height);
+
 	int32_t numBytes = yang_av_image_get_buffer_size(fmt, m_width,m_height, 1);
-	//int32_t numBytes = yang_av_image_get_buffer_size(AV_PIX_FMT_NV12, m_width,m_height, 1);
+
 	buffer = (uint8_t*) yang_av_malloc(numBytes * sizeof(uint8_t));
-	// 将分配的数据缓存空间和AVFrame关联起来
-	//avpicture_fill((AVPicture *)m_frame, buffer, AV_PIX_FMT_YUV420P,m_width,m_height);av_image_fill_arrays
+
 
 	if (usingHw) {
 		yang_av_image_fill_arrays(m_frame->data, m_frame->linesize, buffer,
@@ -347,7 +336,7 @@ void YangH2645VideoDecoderFfmpeg::init() {
 	// av_register_all();
 	// avcodec_register_all();
 	// avcodec_register(AV_CODEC_ID_H264);
-#ifndef _WIN32
+#if Yang_UsingSo
 	m_lib.loadObject("libavcodec");
 	m_lib1.loadObject("libavutil");
 	loadLib();
@@ -372,14 +361,7 @@ void YangH2645VideoDecoderFfmpeg::init() {
 	}
 	m_codecCtx = yang_avcodec_alloc_context3(m_codec);
 }
-/**int32_t YangH2645VideoDecoderFfmpeg::decode( int32_t isIframe,
-		uint8_t *pData, int32_t nSize, uint8_t *dest, int32_t *pnFrameReturned) {
-	if (usingHw)
-		decode_2(isIframe, pData, nSize,  dest,	pnFrameReturned);
-	else
-		decode_1( isIframe, pData, nSize, dest,	pnFrameReturned);
-	return 1;
-}**/
+
 int32_t YangH2645VideoDecoderFfmpeg::decode(YangFrame* videoFrame,YangYuvType yuvtype,YangDecoderCallback* pcallback){
 	if (usingHw)
 			return decode_2(videoFrame,yuvtype,pcallback);
@@ -390,7 +372,7 @@ int32_t YangH2645VideoDecoderFfmpeg::decode(YangFrame* videoFrame,YangYuvType yu
 int32_t YangH2645VideoDecoderFfmpeg::decode_1(YangFrame* videoFrame,YangYuvType yuvtype,YangDecoderCallback* pcallback) {
 	packet.data = videoFrame->payload;
 	packet.size = videoFrame->nb;
-	//printf("%d-%p,",videoFrame->nb,videoFrame->payload);
+
 
 	ret = yang_avcodec_send_packet(m_codecCtx, &packet);
 	if (ret != 0) {

@@ -18,6 +18,11 @@ extern "C" {
 #include "libavutil/avutil.h"
 #include "libavutil/imgutils.h"
 }
+#ifdef _WIN32
+#define Yang_UsingSo 0
+#else
+#define Yang_UsingSo 1
+#endif
 
 class YangH2645VideoDecoderFfmpeg: public YangVideoDecoder {
 public:
@@ -51,9 +56,6 @@ private:
 	AVBufferRef *hw_device_ctx;
 	AVFrame *frame_mem_gpu;
 
-	// AVFrame *tmp_frame;
-	//int32_t decode_1(int32_t isIframe, uint8_t *pData, int32_t nSize,uint8_t *dest, int32_t *pnFrameReturned);
-	//int32_t decode_2(int32_t isIframe, uint8_t *pData, int32_t nSize,uint8_t *dest, int32_t *pnFrameReturned);
 	int32_t decode_1(YangFrame* videoFrame,YangYuvType yuvtype,YangDecoderCallback* pcallback);
 	int32_t decode_2(YangFrame* videoFrame,YangYuvType yuvtype,YangDecoderCallback* pcallback);
 	int32_t set_hwframe_ctx(AVPixelFormat ctxformat, AVPixelFormat swformat,
@@ -62,10 +64,8 @@ private:
 	void getH264RtmpHeader(uint8_t *buf, uint8_t *src, int32_t *hLen);
 	void getH265RtmpHeader(uint8_t *buf, uint8_t *src, int32_t *hLen);
 	void parseHeader(uint8_t *p, int32_t pLen, int32_t *pwid, int32_t *phei, int32_t *pfps);
-	//YangVideoPlay *m_yvp;
-	//AVFrame *tmp_frame;
-	//av_image_get_buffer_size
-#ifndef _WIN32
+
+#if Yang_UsingSo
 	YangLoadLib m_lib, m_lib1;
 	void loadLib();
 	void unloadLib();

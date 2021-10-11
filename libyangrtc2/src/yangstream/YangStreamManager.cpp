@@ -13,6 +13,8 @@ YangStreamManager::YangStreamManager() {
 	m_sendPli=NULL;
 	m_mediaConfig_dec=NULL;
 	m_mediaConfig_render=NULL;
+	m_audioClock=0;
+	m_videoClock=0;
 }
 
 YangStreamManager::~YangStreamManager() {
@@ -27,7 +29,12 @@ YangStreamManager::~YangStreamManager() {
 	m_mediaConfig_dec=NULL;
 	m_mediaConfig_render=NULL;
 }
-
+int32_t YangStreamManager::getAudioClock(){
+	return m_audioClock;
+}
+	int32_t YangStreamManager::getVideoClock(){
+		return m_videoClock;
+	}
 void YangStreamManager::setSendRequestCallback(YangSendRequestCallback* pli){
 	m_sendPli=pli;
 }
@@ -40,6 +47,25 @@ void YangStreamManager::setSendRequestCallback(YangSendRequestCallback* pli){
 void YangStreamManager::setMediaConfig(int32_t puid,YangAudioParam* audio,YangVideoParam* video){
 	if(m_mediaConfig_dec) m_mediaConfig_dec->setMediaConfig(puid,audio,video);
 	if(m_mediaConfig_render) m_mediaConfig_render->setMediaConfig(puid,audio,video);
+	int i=0;
+	if(audio){
+		if(m_playBuffer) m_playBuffer->setAudioClock(audio->audioClock);
+		if(m_playBuffers){
+			for(i=0;i<m_playBuffers->size();i++){
+				m_playBuffers->at(i)->setAudioClock(audio->audioClock);
+			}
+		}
+		m_audioClock=audio->audioClock;
+	}
+	if(video){
+		if(m_playBuffer) m_playBuffer->setVideoClock(video->videoClock);
+				if(m_playBuffers){
+					for(i=0;i<m_playBuffers->size();i++){
+						m_playBuffers->at(i)->setVideoClock(video->videoClock);
+					}
+				}
+		m_videoClock=video->videoClock;
+	}
 }
 	void YangStreamManager::sendRequest(int32_t puid,uint32_t ssrc,YangRequestType req){
 		if(m_sendPli) m_sendPli->sendRequest(puid,ssrc,req);

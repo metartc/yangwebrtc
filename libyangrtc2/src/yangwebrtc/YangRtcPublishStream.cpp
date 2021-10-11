@@ -22,7 +22,6 @@ YangRtcPublishStream::YangRtcPublishStream(YangRtcSessionI *s) {
 YangRtcPublishStream::~YangRtcPublishStream() {
 	yang_delete(m_audio_queue);
 	yang_delete(m_video_queue);
-
 }
 
 int32_t YangRtcPublishStream::init(uint32_t audioSsrc, uint32_t videoSsrc) {

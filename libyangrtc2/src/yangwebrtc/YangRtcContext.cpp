@@ -102,10 +102,10 @@ YangRtcSourceDescription::YangRtcSourceDescription() {
 }
 
 YangRtcSourceDescription::~YangRtcSourceDescription() {
-	yang_freep(audio_track_desc_);
+	yang_delete(audio_track_desc_);
 
 	for (int32_t i = 0; i < (int) video_track_descs_.size(); ++i) {
-		yang_freep(video_track_descs_.at(i));
+		yang_delete(video_track_descs_.at(i));
 	}
 	video_track_descs_.clear();
 }

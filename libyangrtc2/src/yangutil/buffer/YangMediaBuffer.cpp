@@ -83,7 +83,9 @@ uint8_t* YangMediaBuffer::getFrameRef(YangFrame *pframe) {
 }
 YangFrame* YangMediaBuffer::getCurFrameRef() {
 	if(!m_size) return NULL;
-	return m_frames[m_getIndex];
+    m_nextIndex=m_getIndex;
+    if(m_nextIndex>=m_cache_num) m_nextIndex=0;
+    return m_frames[m_nextIndex];
 }
 
 int64_t YangMediaBuffer::getNextFrameTimestamp(){

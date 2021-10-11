@@ -21,7 +21,7 @@ class SrsRtpQueue;
 class YangRtpRingBuffer;
 class YangRtpBuffer{
 public:
-	YangRtpBuffer(YangStreamOptType role);
+	YangRtpBuffer(int pbuflen,int unitsize=1500);
 	~YangRtpBuffer();
 public:
 	char* getBuffer();

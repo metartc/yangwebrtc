@@ -8,6 +8,7 @@ YangAudioStreamCapture::YangAudioStreamCapture() {
 	atime = 0;
 	atime1 = 0;
 	perSt = 0;
+	m_unitAudioTime=960;
 	m_src = NULL;
 	m_srcLen = 0;
 	m_transType = 0;
@@ -29,7 +30,8 @@ void YangAudioStreamCapture::init(int32_t ptranstype, int32_t sample, int32_t ch
 	m_audioType=audioType;
 	if(audioType == Yang_AED_OPUS){
 		perSt=channel==1?320:960;
-				//perSt=960;
+		m_unitAudioTime=(channel==1)?320:960;
+
 	}else if (audioType == Yang_AED_MP3){
 		perSt = 1152 * 1000 / sample;
 	}else if (audioType == Yang_AED_AAC) {
@@ -64,7 +66,11 @@ void YangAudioStreamCapture::setAudioData(YangFrame* audioFrame) {
 
 	}
 	if(m_audioType == Yang_AED_OPUS){
-		atime+=perSt;
+		if(m_transType == Yang_Webrtc){
+			atime+=m_unitAudioTime;
+		}else{
+			atime+=perSt;
+		}
 	}else{
 		atime1 += perSt;		//10240*t_frames/441;
 		atime = (int64_t) atime1;

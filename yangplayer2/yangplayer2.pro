@@ -22,7 +22,7 @@ unix{
         DESTDIR += $$HOME_BASE/bin/app_release
     }
  LIBS +=  -L$$HOME_BASE/thirdparty/lib
- LIBS += -lyangrtc2  -lpthread -lasound -ldl -lssl2 -lcrypto2  -lsrtp2
+ LIBS += -lyangrtc2  -lavutil -lavcodec -lpthread -lasound -ldl -lssl2 -lcrypto2  -lsrtp2
 }
 win32{
     DEFINES += __WIN32__

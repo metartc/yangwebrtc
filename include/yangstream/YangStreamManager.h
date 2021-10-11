@@ -22,10 +22,15 @@ public:
 	void setSendRequestCallback(YangSendRequestCallback* pli);
 	void setDecoderMediaConfigCallback(YangMediaConfigCallback* dec);
 	void setRenderMediaConfigCallback(YangMediaConfigCallback* render);
+	int32_t getAudioClock();
+	int32_t getVideoClock();
 private:
 	YangSendRequestCallback* m_sendPli;
 	YangMediaConfigCallback* m_mediaConfig_dec;
 	YangMediaConfigCallback* m_mediaConfig_render;
+
+	int32_t m_videoClock;
+	int32_t m_audioClock;
 
 
 

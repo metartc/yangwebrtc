@@ -7,13 +7,14 @@ YangPushHandle::YangPushHandle(){
 YangPushHandle::~YangPushHandle(){
 
 }
-YangPushHandle* YangPushHandle::createPushHandle(YangContext* pcontext){
-	return new YangPushHandleImpl(pcontext);
+YangPushHandle* YangPushHandle::createPushHandle(YangContext* pcontext,YangSysMessageI* pmessage){
+	return new YangPushHandleImpl(pcontext,pmessage);
 }
-YangPushHandleImpl::YangPushHandleImpl(YangContext* pcontext) {
+YangPushHandleImpl::YangPushHandleImpl(YangContext* pcontext,YangSysMessageI* pmessage) {
 	m_cap=NULL;
 	m_pub=NULL;
 	m_context=pcontext;
+	m_message=pmessage;
 	m_cap=new YangPushPublish(m_context);
 
 	m_cap->startAudioCapture();
@@ -59,9 +60,10 @@ YangVideoBuffer* YangPushHandleImpl::getPreVideoBuffer(){
 	if(m_cap) return m_cap->getPreVideoBuffer();
 	return NULL;
 }
-void YangPushHandleImpl::publish(string url,string localIp,int32_t localPort) {
+int YangPushHandleImpl::publish(string url,string localIp,int32_t localPort) {
 	//if(m_url.netType !=Yang_Webrtc){
-		if(parse(url)) return;
+	int err=Yang_Ok;
+		if((err=parse(url))!=Yang_Ok) return err;
 	//}
 	stopPublish();
 	printf("\nnetType==%d,server=%s,port=%d,app=%s,stream=%s\n",m_url.netType,m_url.server.c_str(),m_url.port,m_url.app.c_str(),m_url.stream.c_str());
@@ -77,14 +79,15 @@ void YangPushHandleImpl::publish(string url,string localIp,int32_t localPort) {
 	m_cap->setNetBuffer(m_pub);
 	m_cap->startAudioEncoding();
 	m_cap->startVideoEncoding();
-	if(m_pub->init(m_url.netType,m_url.server,localIp,localPort,1985,m_url.app,m_url.stream)){
+	if((err=m_pub->init(m_url.netType,m_url.server,localIp,localPort,1985,m_url.app,m_url.stream))!=Yang_Ok){
 		printf("\n connect server failure!");
-		return;
+		return err;
 	}
 
 	m_pub->start();
 	m_cap->startAudioCaptureState();
 	m_cap->startVideoCaptureState();
+	return err;
 
 }
 

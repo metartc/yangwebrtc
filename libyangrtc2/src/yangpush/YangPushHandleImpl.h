@@ -15,11 +15,11 @@ struct YangPublishUrlType{
 };
 class YangPushHandleImpl :public YangPushHandle{
 public:
-	YangPushHandleImpl(YangContext* pcontext);
+	YangPushHandleImpl(YangContext* pcontext,YangSysMessageI* pmessage);
 	virtual ~YangPushHandleImpl();
 	void init();
 	void startCapture();
-	void publish(string url,string localIp,int32_t localport);
+	int publish(string url,string localIp,int32_t localport);
 	YangVideoBuffer* getPreVideoBuffer();
 	void disconnect();
 private:
@@ -30,6 +30,7 @@ private:
 	YangRtcPublish* m_pub;
 	YangContext* m_context;
 	YangPublishUrlType m_url;
+	YangSysMessageI* m_message;
 
 
 };

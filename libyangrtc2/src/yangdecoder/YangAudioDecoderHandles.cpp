@@ -177,6 +177,7 @@ void YangAudioDecoderHandles::onAudioData(YangFrame* pframe){
 		int ind=0;
 		if(m_context&&(ind=m_context->streams.getIndex(pframe->uid))>-1){
 			m_context->streams.m_playBuffers->at(ind)->setInAudioBuffer(t_vb);
+			m_context->streams.m_playBuffers->at(ind)->setAudioClock(m_context->streams.getAudioClock());
 		}
 	}
 	if (t_vb)		{

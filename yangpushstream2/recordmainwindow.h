@@ -1,4 +1,4 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -9,12 +9,12 @@
 #include "src/video/yangrecordvideowin.h"
 #include "src/video/YangPlayWidget.h"
 #include "yangutil/yangavinfotype.h"
-
+#include <yangutil/sys/YangSysMessageI.h>
 QT_BEGIN_NAMESPACE
 namespace Ui { class RecordMainWindow; }
 QT_END_NAMESPACE
 
-class RecordMainWindow : public QMainWindow
+class RecordMainWindow : public QMainWindow,public YangSysMessageI
 {
     Q_OBJECT
 
@@ -30,6 +30,9 @@ public:
     YangPlayWidget *m_win0;
     QHBoxLayout *m_hb0;
 public:
+
+    void success();
+    void failure(int32_t errcode);
      void initVideoThread(YangRecordThread *prt);
     void closeEvent( QCloseEvent * event );
 private slots:

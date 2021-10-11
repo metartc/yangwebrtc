@@ -9,11 +9,12 @@
 #include "yangstream/YangStreamType.h"
 #include "src/yangplayer/YangPlayWidget.h"
 #include <yangutil/yangavinfotype.h>
+#include <yangutil/sys/YangSysMessageI.h>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow,public YangSysMessageI
 {
     Q_OBJECT
 
@@ -25,9 +26,18 @@ public:
     YangPlayWidget *m_videoWin;
     YangStreamConfig m_conf;
     void initVideoThread(YangRecordThread *prt);
+
+    void success();
+    void failure(int32_t errcode);
+
+    signals:
+       void RtcConnectFailure(int errcode);
 protected:
     YangContext* m_ini;
+
 private slots:
+    void connectFailure(int errcode);
+
 void on_m_b_play_clicked();
 
 private:

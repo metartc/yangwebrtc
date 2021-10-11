@@ -31,6 +31,7 @@ public:
 	uint8_t * getVideoRef(YangFrame* pframe);
 	int64_t getTimestamp(int64_t *timestamp);
 	int64_t getNextTimestamp();
+	YangFrame* getCurVideoFrame();
 	//int32_t playFrame();
 protected:
 

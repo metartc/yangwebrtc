@@ -23,7 +23,6 @@ class YangRecvTrack {
 protected:
 	YangRtcTrack *m_track_desc;
 public:
-
 	YangRtcSessionI *m_session;
 	YangRtpRingBuffer *m_rtp_queue;
 	YangRtpNackForReceiver *m_nack_receiver;
@@ -91,9 +90,14 @@ public:
 			IYangRtpPayloader **ppayload, YangRtspPacketPayloadType *ppt);
 public:
 	int32_t on_rtp(YangRtpPacket *pkt);
+	int32_t on_mixrtp(YangRtpPacket *pkt);
+	YangRtpPacket *get_audiortp(YangRtpPacket *pkt);
 	int32_t check_send_nacks();
-private:
 
+	size_t m_audioCacheSize;
+private:
+	map<int64_t,YangRtpPacket*> m_audioMap;
+	YangRtpBuffer *m_aduioBuffer;
 };
 
 class YangRtcVideoRecvTrack: public YangRecvTrack,
@@ -109,6 +113,7 @@ public:
 			IYangRtpPayloader **ppayload, YangRtspPacketPayloadType *ppt);
 public:
 	virtual int32_t on_rtp(YangRtpPacket *pkt);
+
 	virtual int32_t check_send_nacks();
 private:
 	uint16_t m_header_sn;
@@ -118,6 +123,7 @@ private:
 
 private:
 	int32_t put_frame_video(char *p, int64_t timestamp, int32_t nb);
+	int32_t put_frame_mixvideo(char *p, int64_t timestamp, int32_t nb);
 	struct RtcPacketCache {
 		bool m_in_use;
 		uint16_t m_sn;

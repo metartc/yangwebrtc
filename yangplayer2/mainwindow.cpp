@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "yangutil/sys/YangSocket.h"
 #include <yangutil/sys/YangLog.h>
+#include <QMessageBox>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -32,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_ini->init();
     m_ini->streams.m_playBuffer=new YangSynBuffer();
     m_ini->rtc.mixAvqueue=0;
-    m_player= YangPlayerHandle::createPlayerHandle(m_ini);
+    m_player= YangPlayerHandle::createPlayerHandle(m_ini,this);
 
     YangSocket su;
     char s[128]={0};
@@ -43,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent)
     yang_setLogLevle(5);
     yang_setLogFile(1);
     m_isStartplay=false;
+
+    connect(this,SIGNAL(RtcConnectFailure(int)),SLOT(connectFailure(int)));
 
 
 
@@ -60,6 +63,18 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::success(){
+
+}
+void MainWindow::failure(int32_t errcode){
+    emit RtcConnectFailure(errcode);
+
+
+}
+void MainWindow::connectFailure(int errcode){
+    QMessageBox::about(NULL, "Error", "play error("+QString::number(errcode)+")!");
+   on_m_b_play_clicked();
+}
 void MainWindow::initVideoThread(YangRecordThread *prt){
     m_videoThread=prt;
     m_videoThread->m_video=m_videoWin;
@@ -70,22 +85,23 @@ void MainWindow::initVideoThread(YangRecordThread *prt){
 
 void MainWindow::on_m_b_play_clicked()
 {
-    if(m_player) {
 
-
-        //if(m_videoThread&&m_videoThread->m_syn) m_videoThread->m_syn->setInVideoBuffer(m_player->getVideoBuffer());
-    }
     if(!m_isStartplay){
-
-        ui->m_b_play->setText("stop");
          m_videoThread->m_syn=m_ini->streams.m_playBuffer;
-        if(m_player) m_player->play(ui->m_url->text().toStdString(),localPort);
-        m_isStartplay=!m_isStartplay;
+           if(m_player&&m_player->play(ui->m_url->text().toStdString(),localPort)==Yang_Ok){
+               ui->m_b_play->setText("stop");
+
+               m_isStartplay=!m_isStartplay;
+           }else{
+                QMessageBox::about(NULL, "Error", "play url error!");
+           }
+
 
         // m_recTimeLen=0;
     }else{
         ui->m_b_play->setText("play");
          m_videoThread->m_syn=NULL;
+         QThread::msleep(50);
        if(m_player) m_player->stopPlay();
         // m_rec->stopRecord();
         // yang_post_message(YangM_Rec_Stop,0,NULL);

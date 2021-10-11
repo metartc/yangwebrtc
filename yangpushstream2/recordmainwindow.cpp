@@ -30,7 +30,7 @@ RecordMainWindow::RecordMainWindow(QWidget *parent)
 
     m_win0=NULL;
      m_isVr=0;
-    m_rec=YangPushHandle::createPushHandle(m_ini);
+    m_rec=YangPushHandle::createPushHandle(m_ini,this);
     m_rec->init();
 
     m_hb0=new QHBoxLayout();
@@ -117,7 +117,14 @@ void RecordMainWindow::init(YangContext *para) {
 
 }
 
+void RecordMainWindow::success(){
 
+}
+void RecordMainWindow::failure(int32_t errcode){
+    //on_m_b_play_clicked();
+   QMessageBox::aboutQt(NULL,  "push error("+QString::number(errcode)+")!");
+
+}
 
 void RecordMainWindow::on_m_b_rec_clicked()
 {
@@ -132,7 +139,13 @@ void RecordMainWindow::on_m_b_rec_clicked()
             YangSocket su;
                char s[128]={0};
                sprintf(s,"webrtc://%s:1985/live/livestream",su.getLocalInfo().c_str());
-            m_rec->publish(ui->m_url->text().toStdString(),s,m_ini->sys.rtcLocalPort);
+               int err=m_rec->publish(ui->m_url->text().toStdString(),s,m_ini->sys.rtcLocalPort);
+            if(err){
+                ui->m_b_rec->setText("开始");
+                if(m_rec) m_rec->disconnect();
+                m_isStartpush=!m_isStartpush;
+                 QMessageBox::about(NULL,  "error","push error("+QString::number(err)+")!");
+            }
         }
         // m_recTimeLen=0;
     }else{

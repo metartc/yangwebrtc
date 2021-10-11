@@ -111,7 +111,7 @@ int32_t YangRtcSession::init(YangRtcContext* pconf,YangSendUdpData *pudp, YangRe
 
 	}
 	m_srtp = m_dtls->getSrtp();
-	if(m_rtpBuffer==NULL) m_rtpBuffer=new YangRtpBuffer(m_context->streamConf->streamOptType);
+	if(m_rtpBuffer==NULL) m_rtpBuffer=new YangRtpBuffer(1500);
 	m_packet.init(m_rtpBuffer);
 	if (role == Yang_Stream_Play) {
 		if (m_play == NULL){
@@ -143,7 +143,7 @@ void YangRtcSession::setStunBuffer(char *p, int32_t plen) {
 }
 int32_t YangRtcSession::on_rtcp(char *data, int32_t nb_data) {
 	int32_t err = Yang_Ok;
-	//yang_trace("\nrtcp.....nb==%d",nb_data);
+
 	int32_t nb_unprotected_buf = nb_data;
 	if ((err = m_srtp->dec_rtcp(data, &nb_unprotected_buf)) != Yang_Ok) {
 		return yang_error_wrap(err, "rtcp unprotect");
@@ -368,7 +368,7 @@ int32_t YangRtcSession::check_send_nacks(YangRtpNackForReceiver *nack, uint32_t 
 	nack->get_nack_seqs(rtcpNack, timeout_nacks);
 
 	if (rtcpNack.empty()) {
-		return 0;
+		return Yang_Ok;
 	}
 
 	char buf[kRtcpPacketSize];
@@ -379,7 +379,8 @@ int32_t YangRtcSession::check_send_nacks(YangRtpNackForReceiver *nack, uint32_t 
 	int32_t nb_protected_buf = stream.pos();
 	m_srtp->enc_rtcp(stream.data(), &nb_protected_buf);
 	m_udp->sendData(stream.data(), nb_protected_buf);
-    return nb_protected_buf;
+
+    return Yang_Ok;
 }
 int32_t YangRtcSession::dispatch_rtcp(YangRtcpCommon *rtcp) {
 	int32_t err = Yang_Ok;
@@ -450,8 +451,8 @@ int32_t YangRtcSession::send_rtcp_rr(uint32_t ssrc, YangRtpRingBuffer *rtp_queue
 	uint32_t rr_dlsr = 0;
 
 	if (last_send_systime > 0) {
-		rr_lsr = (last_send_ntp.ntp_second_ << 16)
-				| (last_send_ntp.ntp_fractions_ >> 16);
+        rr_lsr = (last_send_ntp.m_ntp_second << 16)
+                | (last_send_ntp.m_ntp_fractions >> 16);
 		uint32_t dlsr = (yang_update_system_time() - last_send_systime) / 1000;
 		rr_dlsr = ((dlsr / 1000) << 16) | ((dlsr % 1000) * 65536 / 1000);
 	}
@@ -514,8 +515,8 @@ int32_t YangRtcSession::send_rtcp_xr_rrtr(uint32_t ssrc) {
 	stream.write_1bytes(4);
 	stream.write_1bytes(0);
 	stream.write_2bytes(2);
-	stream.write_4bytes(cur_ntp.ntp_second_);
-	stream.write_4bytes(cur_ntp.ntp_fractions_);
+    stream.write_4bytes(cur_ntp.m_ntp_second);
+    stream.write_4bytes(cur_ntp.m_ntp_fractions);
 
 	int32_t nb_protected_buf = stream.pos();
 	if ((err = m_srtp->enc_rtcp(stream.data(), &nb_protected_buf))

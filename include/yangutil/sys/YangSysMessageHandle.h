@@ -1,9 +1,10 @@
 #ifndef INCLUDE_YANGUTIL_SYS_YANGSYSMESSAGEHANDLE_H_
 #define INCLUDE_YANGUTIL_SYS_YANGSYSMESSAGEHANDLE_H_
-#include "yangutil/sys/YangSysMessageI.h"
+#include <yangutil/sys/YangSysMessageI.h>
+#include <yangutil/sys/YangThread.h>
 #include <vector>
-//#include <mutex>
-#include "yangutil/sys/YangThread.h"
+
+
 using namespace std;
 
 class YangSysMessageHandle :public YangThread{

@@ -36,7 +36,7 @@ void YangMixQueue::clear()
     std::multimap<int64_t, YangMessage*>::iterator it;
     for (it = msgs.begin(); it != msgs.end(); ++it) {
     	YangMessage* msg = it->second;
-        yang_freep(msg);
+        yang_delete(msg);
     }
     msgs.clear();
 
@@ -88,7 +88,7 @@ YangMessage* YangMixQueue::pop()
     } else {
         nb_audios--;
     }
-   // printf("%d,",msg->mediaType);
+
     return msg;
 }
 
@@ -107,9 +107,9 @@ YangRtpRingBuffer::~YangRtpRingBuffer()
 {
     for (int32_t i = 0; i < m_capacity; ++i) {
         YangRtpPacket* pkt = m_queue[i];
-        yang_freep(pkt);
+        yang_delete(pkt);
     }
-    yang_freepa(m_queue);
+    yang_deleteA(m_queue);
 }
 
 bool YangRtpRingBuffer::empty()
@@ -132,7 +132,7 @@ void YangRtpRingBuffer::advance_to(uint16_t seq)
 void YangRtpRingBuffer::set(uint16_t at, YangRtpPacket* pkt)
 {
     YangRtpPacket* p = m_queue[at % m_capacity];
-    yang_freep(p);
+    yang_delete(p);
 
     m_queue[at % m_capacity] = pkt;
 }
@@ -219,7 +219,7 @@ void YangRtpRingBuffer::clear_histroy(uint16_t seq)
     for (uint16_t i = 0; i < m_capacity; i++) {
         YangRtpPacket* p = m_queue[i];
         if (p && p->m_header.get_sequence() < seq) {
-            yang_freep(p);
+            yang_delete(p);
             m_queue[i] = NULL;
         }
     }
@@ -230,7 +230,7 @@ void YangRtpRingBuffer::clear_all_histroy()
     for (uint16_t i = 0; i < m_capacity; i++) {
         YangRtpPacket* p = m_queue[i];
         if (p) {
-            yang_freep(p);
+            yang_delete(p);
             m_queue[i] = NULL;
         }
     }
@@ -369,10 +369,10 @@ void YangRtpNackForReceiver::update_rtt(int32_t rtt)
     m_opts.nack_interval = yang_min(m_opts.nack_interval, m_opts.max_nack_interval);
 }
 
-YangRtpBuffer::YangRtpBuffer(YangStreamOptType role){
-	m_bufLen=1500;//role==Yang_Stream_Play?1500:20;
+YangRtpBuffer::YangRtpBuffer(int pbuflen,int unitsize){
+	m_bufLen=pbuflen;//role==Yang_Stream_Play?1500:20;
 	m_index=0;
-	m_buffer=new char[1500*m_bufLen];
+	m_buffer=new char[unitsize*m_bufLen];
 
 }
 YangRtpBuffer::~YangRtpBuffer(){

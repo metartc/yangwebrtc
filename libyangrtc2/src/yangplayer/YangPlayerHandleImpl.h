@@ -6,6 +6,7 @@
 #include <yangplayer/YangPlayReceive.h>
 #include <yangstream/YangSynBuffer.h>
 #include <yangutil/yangavinfotype.h>
+
 #include "YangRtcReceive.h"
 
 struct YangPlayerUrlType{
@@ -17,11 +18,11 @@ struct YangPlayerUrlType{
 };
 class YangPlayerHandleImpl :public YangPlayerHandle{
 public:
-	YangPlayerHandleImpl(YangContext* pcontext);
+	YangPlayerHandleImpl(YangContext* pcontext,YangSysMessageI* pmessage);
 	virtual ~YangPlayerHandleImpl();
 	YangVideoBuffer* getVideoBuffer();
-	void play(string url,int32_t localport);
-	//void playRtc(char* serverIp,int32_t port,char* app,char* stream);
+	int play(string url,int32_t localport);
+
 	int32_t playRtc(int32_t puid,std::string localIp,int32_t localPort, std::string server, int32_t pport,std::string app,std::string stream);
 	void stopPlay();
 protected:
@@ -31,12 +32,12 @@ protected:
 	YangPlayReceive *m_recv;
 	YangPlayerBase *m_play;
 	YangRtcReceive *m_rtcRecv;
-	//void stopPlay();
+
 private:
 	YangContext* m_context;
 	YangVideoDecoderBuffer* m_outVideoBuffer;
 	YangAudioEncoderBuffer* m_outAudioBuffer;
-	//YangSynBuffer* m_syn;
+	YangSysMessageI* m_message;
 };
 
 #endif /* YANGMEETING_INCLUDE_YANGPLAYERHANDLE_H_ */
