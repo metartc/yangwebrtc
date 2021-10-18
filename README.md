@@ -67,7 +67,6 @@ https://github.com/ossrs/srs/releases/tag/v4.0.146
 用QT(推荐5.14.2及以上版本)打开工程libyangrtc2、yangpushstream2、yangplayer2 ,如需改动目录将其.pro文件中HOME_BASE=..\更改为所需目录。  
 QT下载地址：https://download.qt.io/archive/qt/5.14/5.14.2/  
 静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。  
-Remark:windows下qt编译器为mingw64  
 Remark:ubuntu默认不支持opengl sudo apt-get install libgl1-mesa-dev  
 ### 第三方系统lib
 https://github.com/yangrtc/yangwebrtc/releases/tag/thirdparty2.0  
