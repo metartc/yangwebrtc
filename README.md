@@ -54,7 +54,7 @@ git clone https://github.com/yangrtc/yangwebrtc.git
 
 ### 服务器部署
 
-启动服务程序，目前暂时支持Srs4.0.146，其他版本兼容性正在开发中，下载编译参考http://github.com/ossrs/srs#usage  
+启动服务程序，目前暂时支持Srs4.0.146及以上版本，下载编译参考http://github.com/ossrs/srs#usage  
 #### srs4.0.146下载地址
 https://github.com/ossrs/srs/releases/tag/v4.0.146  
 
