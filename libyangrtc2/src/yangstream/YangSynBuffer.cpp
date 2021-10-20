@@ -149,7 +149,7 @@ int32_t YangSynBuffer::getVideoSize() {
 		return m_videoBuffer->size();
 	return 0;
 }
-int cou=0;
+
 int YangSynBuffer::playAudioFrame(int64_t pts) {
 
 	if (m_audioBase == 0) {
