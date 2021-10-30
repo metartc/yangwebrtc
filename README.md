@@ -65,6 +65,7 @@ https://github.com/ossrs/srs/releases/tag/v4.0.146
 ### 客户端编译
 
 #### 编译教程视频
+https://www.bilibili.com/video/BV1d3411r742/
 https://github.com/yangrtc/yangrtc2/releases/tag/2.0.032_video  
 
 用QT(推荐5.14.2及以上版本)打开工程libyangrtc2、yangpushstream2、yangplayer2 ,如需改动目录将其.pro文件中HOME_BASE=..\更改为所需目录。  
