@@ -18,7 +18,7 @@
 #include<stdlib.h>
 #include<yangutil/yang_unistd.h>
 #include <yangutil/sys/YangLog.h>
-#include <unistd.h>
+
 using namespace std;
 void yang_getIp( std::string domain, std::string& ip)
 {
