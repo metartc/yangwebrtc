@@ -49,7 +49,7 @@ Remark: Yangwebrtc2.0 is developing and not stable.
 
 下载源码，推荐ubuntu或者win10
 
-git clone https://github.com/yangrtc/yangwebrtc.git 
+git clone https://github.com/metartc/yangwebrtc.git 
 
 
 ### 服务器部署
@@ -66,7 +66,7 @@ https://github.com/ossrs/srs/releases/tag/v4.0.146
 
 #### 编译教程视频
 https://www.bilibili.com/video/BV1d3411r742/  
-https://github.com/yangrtc/yangrtc2/releases/tag/2.0.032_video  
+https://github.com/metartc/yangrtc2/releases/tag/2.0.032_video  
 
 用QT(推荐5.14.2及以上版本)打开工程libyangrtc2、yangpushstream2、yangplayer2 ,如需改动目录将其.pro文件中HOME_BASE=..\更改为所需目录。  
 QT下载地址：https://download.qt.io/archive/qt/5.14/5.14.2/  
@@ -84,7 +84,7 @@ windows:bin/app_win_release bin/lib_win_release
 
  **remark:程序需要一些动态库才能运行，所需动态库在lib文件夹里，lib文件夹在runtime包中  **   
  **remark:如用qt调试，需将yang_config.ini和lib目录copy到debug和release目录下  **  
-yang_config.ini和lib目录下载链接:https://github.com/yangrtc/yangwebrtc/releases/tag/2.0-runtime   
+yang_config.ini和lib目录下载链接:https://github.com/metartc/yangwebrtc/releases/tag/2.0-runtime   
 #### windows qt debug dlls
 ![图片](https://user-images.githubusercontent.com/87118023/136520546-a03812a7-f91a-479d-a1ff-f6771829d202.png)
 
