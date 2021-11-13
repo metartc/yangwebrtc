@@ -98,7 +98,7 @@ yang_config.ini和lib目录下载链接:https://github.com/metartc/yangwebrtc/re
  
 #### 视频会议YangMeeting2.0编译 
 
-https://github.com/yangrtc/yangwebrtc/wiki/YangMeeting-Getting-Started
+https://blog.csdn.net/m0_56595685/article/details/121245805  
   
 
 ### 第三方系统源码
