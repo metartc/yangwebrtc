@@ -110,5 +110,9 @@ https://github.com/yangrtc/yangwebrtc/releases/tag/thirdparty2.0
 https://github.com/opencv/opencv/releases/tag/3.4.13 及以上版本
 
 yang_config.ini配置参数https://github.com/yangrtc/yangrtc/wiki/config_file  
+
 ### yangwebrtc服务群
-![newgroup](https://user-images.githubusercontent.com/87118023/140645041-92d6a7f9-53aa-4a1e-8256-0b68f9a55353.jpg)
+
+![ws](https://user-images.githubusercontent.com/87118023/141673197-223a86bb-beab-4add-8ee5-44ed66250534.jpg)
+
+
