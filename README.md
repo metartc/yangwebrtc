@@ -72,7 +72,7 @@ QT下载地址：https://download.qt.io/archive/qt/5.14/5.14.2/
 静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。  
 Remark:ubuntu默认不支持opengl sudo apt-get install libgl1-mesa-dev  
 ### 第三方系统lib
-https://github.com/yangrtc/yangwebrtc/releases/tag/thirdparty2.0  
+https://github.com/metartc/yangwebrtc/releases/tag/thirdparty2.0  
 编译后的二进制文件在当前bin目录下  
 #### debug目录  
 linux:bin/app_debug bin/lib_debug  
@@ -102,13 +102,13 @@ https://blog.csdn.net/m0_56595685/article/details/121245805
 
 ### 第三方系统源码
 
-https://github.com/yangrtc/yangwebrtc/releases/tag/thirdparty2.0
+https://github.com/metartc/yangwebrtc/releases/tag/thirdparty2.0
 
 里面不包含支持vr动态库，如需支持vr，下载opencv3
 
 https://github.com/opencv/opencv/releases/tag/3.4.13 及以上版本
 
-yang_config.ini配置参数https://github.com/yangrtc/yangrtc/wiki/config_file  
+yang_config.ini配置参数https://github.com/metartc/yangrtc/wiki/config_file  
 
 ### yangwebrtc服务群
 
