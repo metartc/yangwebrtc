@@ -33,7 +33,6 @@ yangwebrtc基础类库，实现所有核心功能
 webrtc推流系统demo  
 #### yangplayer2 
 webrtc拉流播放系统demo 
-
 ### yangwebrtc3.0规划  
 
  1、支持android/ios/mac等。  
@@ -41,38 +40,46 @@ webrtc拉流播放系统demo
  3、传输加密支持国密加密，修改srtp支持国密。  
  4、实现10位、16位全链路打通，从采集、编码、传输、解码、播放这些环节全部支持10/16位。  
   
-
 ## Getting Started
+
+## 一定要看编译教程视频，不看一定会扑街！！！ 
 
 Remark: Yangwebrtc2.0 is developing and not stable.  
 
 下载源码，推荐ubuntu或者win10
 
+```
 git clone https://github.com/metartc/yangwebrtc.git 
-
+```
 
 ### 服务器部署
 
-启动srs服务程序，下载编译参考http://github.com/ossrs/srs#usage  
+启动srs服务程序，下载编译参考`http://github.com/ossrs/srs#usage`
 #### srs下载地址
+
+```
 https://github.com/ossrs/srs/releases/  
-
-​      objs/srs -c conf/https.rtc.conf
-
+​objs/srs -c conf/https.rtc.conf
+```
 
 
 ### 客户端编译
 
 #### 编译教程视频
-https://www.bilibili.com/video/BV1d3411r742/  
-https://github.com/metartc/yangrtc2/releases/tag/2.0.032_video  
+`https://www.bilibili.com/video/BV1d3411r742/`
+`https://github.com/metartc/yangrtc2/releases/tag/2.0.032_video`  
 
-用QT(推荐5.14.2及以上版本)打开工程libyangrtc2、yangpushstream2、yangplayer2 ,如需改动目录将其.pro文件中HOME_BASE=..\更改为所需目录。  
-QT下载地址：https://download.qt.io/archive/qt/5.14/5.14.2/  
+- 用QT(推荐5.14.2及以上版本)打开工程`libyangrtc2、yangpushstream2、yangplayer2 ,如需改动目录将其.pro文件中HOME_BASE=..\更改为所需目录。  
+[QT下载地址：](https://download.qt.io/archive/qt/5.14/5.14.2/)  
 静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。  
-Remark:ubuntu默认不支持opengl sudo apt-get install libgl1-mesa-dev  
+Remark:ubuntu默认不支持opengl 
+```
+sudo apt update
+sudo apt-get install libgl1-mesa-dev  
+```
+
 ### 第三方系统lib
-https://github.com/metartc/yangwebrtc/releases/tag/thirdparty2.0  
+`https://github.com/metartc/yangwebrtc/releases/tag/thirdparty2.0`
 编译后的二进制文件在当前bin目录下  
 #### debug目录  
 linux:bin/app_debug bin/lib_debug  
@@ -83,7 +90,7 @@ windows:bin/app_win_release bin/lib_win_release
 
  **remark:程序需要一些动态库才能运行，所需动态库在lib文件夹里，lib文件夹在runtime包中  **   
  **remark:如用qt调试，需将yang_config.ini和lib目录copy到debug和release目录下  **  
-yang_config.ini和lib目录下载链接:https://github.com/metartc/yangwebrtc/releases/tag/2.0-runtime   
+yang_config.ini和lib目录下载链接:`https://github.com/metartc/yangwebrtc/releases/tag/2.0-runtime`   
 #### windows qt debug dlls
 ![图片](https://user-images.githubusercontent.com/87118023/136520546-a03812a7-f91a-479d-a1ff-f6771829d202.png)
 
