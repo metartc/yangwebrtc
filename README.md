@@ -7,8 +7,7 @@ yangwebrtc是一个自主研发的支持Webrtc/Srt/Rtmp的rtc架构，包含多�
 webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib和浏览器互通  
 支持Srs sfu https://github.com/ossrs/srs/  
 支持Linux/Windows操作系统，android/ios/mac版本正开发中  
-### 视频会议高清录播等应用系统
- **已经移到https://github.com/yangrtc/yangrtc** 
+
 ### yangwebrtc功能
 
  1、视频编码 8bit:x264、x265、vaapi、nvenc等，二期增加AV1和多种硬件编码。  
@@ -54,9 +53,9 @@ git clone https://github.com/metartc/yangwebrtc.git
 
 ### 服务器部署
 
-启动服务程序，目前暂时支持Srs4.0.146及以上版本，下载编译参考http://github.com/ossrs/srs#usage  
-#### srs4.0.146下载地址
-https://github.com/ossrs/srs/releases/tag/v4.0.146  
+启动srs服务程序，下载编译参考http://github.com/ossrs/srs#usage  
+#### srs下载地址
+https://github.com/ossrs/srs/releases/  
 
 ​      objs/srs -c conf/https.rtc.conf
 
@@ -96,7 +95,7 @@ yang_config.ini和lib目录下载链接:https://github.com/metartc/yangwebrtc/re
 
 编译后生成可执行文件放入下载的运行环境即可运行    
  
-#### 视频会议YangMeeting2.0编译 
+#### 视频会议yangmeeting2编译 
 
 https://blog.csdn.net/m0_56595685/article/details/121245805  
   
