@@ -119,6 +119,7 @@ yang_config.ini配置参数https://github.com/metartc/yangrtc/wiki/config_file
 
 ### yangwebrtc服务群
 
-![ws](https://user-images.githubusercontent.com/87118023/141673197-223a86bb-beab-4add-8ee5-44ed66250534.jpg)
+![wxq1121](https://user-images.githubusercontent.com/87118023/142752242-26dafc5e-04ad-445b-88fb-e3b5af68fc99.jpg)
+
 
 
