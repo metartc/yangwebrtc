@@ -68,12 +68,12 @@ https://github.com/ossrs/srs/releases/
 #### 编译教程视频
 `https://www.bilibili.com/video/BV1d3411r742/`
 `https://github.com/metartc/yangrtc2/releases/tag/2.0.032_video`  
-### 编译教程
+#### 编译教程
 https://blog.csdn.net/m0_56595685/article/details/12157510
 https://blog.csdn.net/m0_56595685/article/details/121410868
-### 视频会议编译教程
+#### 视频会议编译教程
 https://blog.csdn.net/m0_56595685/article/details/121304109
-
+#### 编译
 - 用QT(推荐5.14.2及以上版本)打开工程`libyangrtc2、yangpushstream2、yangplayer2 ,如需改动目录将其.pro文件中HOME_BASE=..\更改为所需目录。  
 [QT下载地址：](https://download.qt.io/archive/qt/5.14/5.14.2/)  
 静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。  
