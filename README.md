@@ -69,7 +69,7 @@ https://github.com/ossrs/srs/releases/
 `https://www.bilibili.com/video/BV1d3411r742/`
 `https://github.com/metartc/yangrtc2/releases/tag/2.0.032_video`  
 #### 编译教程
-https://blog.csdn.net/m0_56595685/article/details/12157510
+https://blog.csdn.net/m0_56595685/article/details/12157510  
 https://blog.csdn.net/m0_56595685/article/details/121410868
 #### 视频会议编译教程
 https://blog.csdn.net/m0_56595685/article/details/121304109
