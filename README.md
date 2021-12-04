@@ -69,8 +69,11 @@ https://github.com/ossrs/srs/releases/
 `https://www.bilibili.com/video/BV1d3411r742/`
 `https://github.com/metartc/yangrtc2/releases/tag/2.0.032_video`  
 #### 编译教程
-https://blog.csdn.net/m0_56595685/article/details/12157510  
-https://blog.csdn.net/m0_56595685/article/details/121410868
+gpu编码器搭建游戏教育等在线低延迟直播 https://blog.csdn.net/m0_56595685/article/details/121575105   
+搭建兼容webrtc的跨平台的云桌面  https://blog.csdn.net/m0_56595685/article/details/121410868
+搭建虚拟背景和美颜webrtc直播系统 https://blog.csdn.net/m0_56595685/article/details/121575105  
+搭建视频会议 https://blog.csdn.net/m0_56595685/article/details/121304109  
+搭建H264和H265的MP4录制系统  https://blog.csdn.net/m0_56595685/article/details/121720754  
 #### 视频会议编译教程
 https://blog.csdn.net/m0_56595685/article/details/121304109
 #### 编译
