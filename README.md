@@ -1,8 +1,9 @@
 ## MetaRTC(yangwebrtc) Overview
 
 MetaRTC(yangwebrtc)是一个自主研发的支持Webrtc/Srt/Rtmp的rtc架构，包含多种视音频编解码和处理等。  
+**yangwebrtc为PC版本**  
 metaRTC为嵌入式版本 https://github.com/metartc/metaRTC  
-yangwebrtc为PC版本  
+
 支持视频会议、高清录播直播、直播互动、云游戏、云3D等多种视音频应用。  
 可用于远程教育、远程医疗、指挥调度、安防监控、影视录播、协同办公、直播互动等多种行业应用。  
 webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib和浏览器互通  
@@ -42,7 +43,7 @@ meta代码量小，二次开发难度小，并且有完整的国人社区。
  12、实现了屏幕共享与控制。  
  13、实现了声音和图像多种处理。  
  14、专业摄像头的云台控制与多镜头导播切换。  
- 15、64位编程，不支持32位。  
+  
 
 ### 目录简介
 #### libyangrtc2 
@@ -77,7 +78,8 @@ git clone https://github.com/metartc/metaRTC.git
 
 ```
 https://github.com/ossrs/srs/releases/  
-​objs/srs -c conf/https.rtc.conf
+​objs/srs -c conf/https.rtc.conf  
+​objs/srs -c conf/rtc.conf
 ```
 
 
@@ -96,7 +98,7 @@ gpu编码器搭建游戏教育等在线低延迟直播 https://blog.csdn.net/m0_
 #### 视频会议编译教程
 https://blog.csdn.net/m0_56595685/article/details/121304109
 #### 编译
-- 用QT(推荐5.14.2及以上版本)打开工程`libyangrtc2、yangpushstream2、yangplayer2 ,如需改动目录将其.pro文件中HOME_BASE=..\更改为所需目录。  
+- 用QT(推荐5.14.2及以上版本)打开工程`libyangrtc2、yangpushstream2、yangplayer2。    
 [QT下载地址：](https://download.qt.io/archive/qt/5.14/5.14.2/)  
 静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。  
 Remark:ubuntu默认不支持opengl 
@@ -104,9 +106,6 @@ Remark:ubuntu默认不支持opengl
 sudo apt update
 sudo apt-get install libgl1-mesa-dev  
 ```
-
-### 第三方系统lib
-`https://github.com/metartc/yangwebrtc/releases/tag/thirdparty2.0`
 编译后的二进制文件在当前bin目录下  
 #### debug目录  
 linux:bin/app_debug bin/lib_debug  
@@ -117,7 +116,6 @@ windows:bin/app_win_release bin/lib_win_release
 
  **remark:程序需要一些动态库才能运行，所需动态库在lib文件夹里，lib文件夹在runtime包中  **   
  **remark:如用qt调试，需将yang_config.ini和lib目录copy到debug和release目录下  **  
-yang_config.ini和lib目录下载链接:`https://github.com/metartc/yangwebrtc/releases/tag/2.0-runtime`   
 #### windows qt debug dlls
 ![图片](https://user-images.githubusercontent.com/87118023/136520546-a03812a7-f91a-479d-a1ff-f6771829d202.png)
 
@@ -127,12 +125,7 @@ yang_config.ini和lib目录下载链接:`https://github.com/metartc/yangwebrtc/r
 ![图片](https://user-images.githubusercontent.com/87118023/133883160-c10df7ba-ea97-482d-99b4-cb09af73d723.png)
 
 
-编译后生成可执行文件放入下载的运行环境即可运行    
- 
-#### 视频会议yangmeeting2编译 
-
-https://blog.csdn.net/m0_56595685/article/details/121245805  
-  
+编译后生成可执行文件放入下载的运行环境即可运行      
 
 ### 第三方系统源码
 
