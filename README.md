@@ -64,10 +64,12 @@ webrtc拉流播放系统demo
 
 Remark: Yangwebrtc2.0 is developing and not stable.  
 
+metaRTC嵌入式webrtc编程指南 https://blog.csdn.net/m0_56595685/article/details/122010285  
+视频编译教程 https://www.bilibili.com/video/BV1d3411r742/  
 下载源码，推荐ubuntu或者win10
 
 ```
-git clone https://github.com/metartc/yangwebrtc.git 
+git clone https://github.com/metartc/metaRTC.git 
 ```
 
 ### 服务器部署
