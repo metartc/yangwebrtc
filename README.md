@@ -138,6 +138,4 @@ https://github.com/opencv/opencv/releases/tag/3.4.13 及以上版本
 yang_config.ini配置参数https://github.com/metartc/yangrtc/wiki/config_file  
 
 ### yangwebrtc服务群
-![1220big](https://user-images.githubusercontent.com/87118023/146779043-0385e4e2-d69a-4e3f-9e85-74752edf3d9c.jpg)
-
-
+![1225big](https://user-images.githubusercontent.com/87118023/147380918-f79064a5-f114-4230-b8fc-7deea8c00c44.jpg)
