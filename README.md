@@ -1,8 +1,8 @@
 ## MetaRTC(yangwebrtc) Overview
 
 MetaRTC(yangwebrtc)是一个自主研发的支持Webrtc/Srt/Rtmp的rtc架构，包含多种视音频编解码和处理等。  
-**yangwebrtc为PC版本**  
-metaRTC为嵌入式版本 https://github.com/metartc/metaRTC  
+**yangwebrtc为C++版本**  
+metaRTC为纯C版本 https://github.com/metartc/metaRTC  
 
 支持视频会议、高清录播直播、直播互动、云游戏、云3D等多种视音频应用。  
 可用于远程教育、远程医疗、指挥调度、安防监控、影视录播、协同办公、直播互动等多种行业应用。  
