@@ -25,7 +25,8 @@ meta代码量小，二次开发难度小，并且有完整的国人社区。
 - webrtc是p2p的，没有服务端，而开源的服务端，五花八门，学习成本高，开发者经常纠结使用那个webrtc开源服务。metartc推荐使用[srs](https://github.com/ossrs/srs) 杨成立大佬开源的服务端（国人写的）,当然如果你有自己的流媒体服务器也支持对接。
 
 - metartc更本土化，拥有自主的开发权，需要的功能和建议都可以提issue，会根据开发者的建议来更新迭代metartc
-
+## MetaRTC(yangwebrtc)微信群
+加微信taihang82
 
 ### MetaRTC(yangwebrtc)功能
 
