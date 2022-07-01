@@ -1,7 +1,7 @@
-## MetaRTC(yangwebrtc) Overview
+## MetaRTC(yangrtc) Overview
 
-MetaRTC(yangwebrtc)是一个自主研发的支持Webrtc/Srt/Rtmp的rtc架构，包含多种视音频编解码和处理等。  
-**yangwebrtc为C++版本**  
+MetaRTC(yangrtc)是一个自主研发的支持Webrtc/Srt/Rtmp的rtc架构，包含多种视音频编解码和处理等。  
+**yangrtc为C++版本**  
 metaRTC为纯C版本 https://github.com/metartc/metaRTC  
 
 支持视频会议、高清录播直播、直播互动、云游戏、云3D等多种视音频应用。  
@@ -10,10 +10,10 @@ webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib�
 支持Srs sfu https://github.com/ossrs/srs/  
 支持Linux/Windows操作系统，android/ios/mac版本正开发中  
 
-## MetaRTC(yangwebrtc)微信群
+## MetaRTC(yangrtc)微信群
 加微信taihang82
 
-### MetaRTC(yangwebrtc)功能
+### MetaRTC(yangrtc)功能
 
  1、视频编码 8bit:x264、x265、vaapi、nvenc等，二期增加AV1和多种硬件编码。  
  2、视频编码 10bit:x265、vaapi、nvenc等。  
