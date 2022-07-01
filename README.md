@@ -8,23 +8,8 @@ metaRTC为纯C版本 https://github.com/metartc/metaRTC
 可用于远程教育、远程医疗、指挥调度、安防监控、影视录播、协同办公、直播互动等多种行业应用。  
 webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib和浏览器互通  
 支持Srs sfu https://github.com/ossrs/srs/  
-支持Linux/Windows操作系统，android/ios/mac版本正开发中
+支持Linux/Windows操作系统，android/ios/mac版本正开发中  
 
-## MetaRTC(yangwebrtc)和谷歌 Webrtc的区别
-针对于谷歌webrtc有以下优势
-- webrtc编译难，需要科学上网，仓库几十个G。
-而metartc在[B站](https://www.bilibili.com/video/BV1d3411r742/)有完整的编译教程和视频
-在中国有自己的社区,解决开发者的使用问题
-
-- webrtc使用c++开发，体积大，不适合嵌入式。
-metartc大多数使用c语言开发，天生适合嵌入式。
-
-- webrtc是谷歌开发，代码量大，二次开发难度大。
-meta代码量小，二次开发难度小，并且有完整的国人社区。
-
-- webrtc是p2p的，没有服务端，而开源的服务端，五花八门，学习成本高，开发者经常纠结使用那个webrtc开源服务。metartc推荐使用[srs](https://github.com/ossrs/srs) 杨成立大佬开源的服务端（国人写的）,当然如果你有自己的流媒体服务器也支持对接。
-
-- metartc更本土化，拥有自主的开发权，需要的功能和建议都可以提issue，会根据开发者的建议来更新迭代metartc
 ## MetaRTC(yangwebrtc)微信群
 加微信taihang82
 
