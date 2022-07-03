@@ -36,12 +36,7 @@ yangrtc基础类库，实现所有核心功能
 webrtc推流系统demo  
 #### yangplayer2 
 webrtc拉流播放系统demo 
-### yangwebrtc3.0规划  
 
- 1、支持android/ios/mac等。  
- 2、webrtc支持h265、av1等。   
- 3、传输加密支持国密加密，修改srtp支持国密。  
- 4、实现10位、16位全链路打通，从采集、编码、传输、解码、播放这些环节全部支持10/16位。  
   
 ## Getting Started
 
