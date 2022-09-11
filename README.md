@@ -1,118 +1,148 @@
-## MetaRTC(yangrtc) Overview
+## yangrtc(metaRTC) Overview 
+yangrtc实现了webrtc协议，支持webrtc/srt/rtmp，提供纯C和C++两种版本接口。   
+webrtc支持为原创，没有引用谷歌webrtc代码,可与谷歌Webrtc库和浏览器互通。  
+支持windows/linux/android等     
 
-MetaRTC(yangrtc)是一个自主研发的支持Webrtc/Srt/Rtmp的rtc架构，包含多种视音频编解码和处理等。  
-
-支持视频会议、高清录播直播、直播互动、云游戏、云3D等多种视音频应用。  
-可用于远程教育、远程医疗、指挥调度、安防监控、影视录播、协同办公、直播互动等多种行业应用。  
-webrtc支持为自主研发，非谷歌lib,兼容webrtc协议 ,可与谷歌Lib和浏览器互通  
-支持Srs sfu https://github.com/ossrs/srs/  
-支持Linux/Windows操作系统，android/ios/mac版本正开发中  
-
-## MetaRTC(yangrtc)微信群
-加微信taihang82
-
-### MetaRTC(yangrtc)功能
-
- 1、视频编码 8bit:x264、x265、vaapi、nvenc等，二期增加AV1和多种硬件编码。  
- 2、视频编码 10bit:x265、vaapi、nvenc等。  
- 3、视频解码：ffmpeg和yangh264decoder。  
- 4、VR:基于抠图实现虚拟视频的互动和录制、直播等。  
- 5、8bit和10bit网络播放器：yangplayer  
- 6、音频：Opus、Aac、Speex、Mp3等音频编解码。  
- 7、音频：AEC、AGC、ANS及声音合成等处理。  
- 8、传输：webrtc、rtmp、srt，webrtc为自己实现，没使用谷歌lib库。  
- 9、直播：rtmp、srt、webrtc、HLS、HTTP-FLV。  
- 10、8bit录制：h264、h265的mp4和flv。  
- 11、10bit录制：h265的mp4  
- 12、实现了屏幕共享与控制。  
- 13、实现了声音和图像多种处理。  
- 14、专业摄像头的云台控制与多镜头导播切换。  
+Remark:metaRTC3.0/metaRTC4.0等停止更新，推荐使用稳定版metaRTC5.0  
+Remark:metaRTC5.0为稳定版本    
   
 
-### 目录简介
-#### libyangrtc2 
-yangrtc基础类库，实现所有核心功能  
-#### yangpushstream2 
-webrtc推流系统demo  
-#### yangplayer2 
-webrtc拉流播放系统demo 
+## metaRTC服务微信群
+可加微信taihang82  
 
-  
-## Getting Started
+## Learning metaRTC 教程
+https://github.com/metartc/metaRTC/wiki/metaRTC-Learning  
 
-## 一定要看编译教程视频，不看一定会扑街！！！ 
+### metaRTC5.0稳定版本下载
+https://github.com/metartc/metaRTC/releases/tag/v5.0-b5  
+### 纯C版IPC第三方库下载
+https://github.com/metartc/metaRTC/releases/tag/v5.0-b1   
 
+### metaRTC5.0 API
+https://github.com/metartc/metaRTC/wiki/metaRTC5.0-API  
+https://github.com/metartc/metaRTC/wiki/metaRTC5.0-API-Sample   
+ 
+## MetaRTC和谷歌Webrtc的区别
+### MetaRTC编译简单
+webrtc编译难，仓库几十个G。  
 
-下载源码，推荐ubuntu或者win10
+metaRTC代码量小，编译简单。  
 
-```
-git clone https://github.com/metartc/metaRTC.git 
-```
-
-### 服务器部署
-
-启动srs服务程序，下载编译参考`http://github.com/ossrs/srs#usage`
-#### srs下载地址
-
-```
-https://github.com/ossrs/srs/releases/  
-​objs/srs -c conf/https.rtc.conf  
-​objs/srs -c conf/rtc.conf
-```
+而metartc在[B站](https://www.bilibili.com/video/BV1d3411r742/)有完整的编译教程和视频。  
 
 
-### 客户端编译
+### 体积小  
+webrtc使用c++开发，体积大，不适合嵌入式。  
 
-#### 编译教程视频
-`https://www.bilibili.com/video/BV1d3411r742/`
-`https://github.com/metartc/yangrtc2/releases/tag/2.0.032_video`  
-#### 编译教程
-gpu编码器搭建游戏教育等在线低延迟直播 https://blog.csdn.net/m0_56595685/article/details/121575105   
-搭建兼容webrtc的跨平台的云桌面  https://blog.csdn.net/m0_56595685/article/details/121410868  
-搭建虚拟背景和美颜webrtc直播系统 https://blog.csdn.net/m0_56595685/article/details/121575105  
-搭建视频会议 https://blog.csdn.net/m0_56595685/article/details/121304109  
-搭建H264和H265的MP4录制系统  https://blog.csdn.net/m0_56595685/article/details/121720754  
-搭建H265（HEVC）的webrtc应用 https://blog.csdn.net/m0_56595685/article/details/121880362  
-#### 视频会议编译教程
-https://blog.csdn.net/m0_56595685/article/details/121304109
-#### 编译
-- 用QT(推荐5.14.2及以上版本)打开工程`libyangrtc2、yangpushstream2、yangplayer2。    
-[QT下载地址：](https://download.qt.io/archive/qt/5.14/5.14.2/)  
-静态库需要三个，ssl/crypto/srtp2，目录里已经有编译好的，如果有问题请再编译新的， 然后顺序编译即可。  
-Remark:ubuntu默认不支持opengl 
-```
-sudo apt update
-sudo apt-get install libgl1-mesa-dev  
-```
-编译后的二进制文件在当前bin目录下  
-#### debug目录  
-linux:bin/app_debug bin/lib_debug  
-windows:bin/app_win_debug bin/lib_win_debug  
-#### release目录  
-linux:bin/app_release bin/lib_release  
-windows:bin/app_win_release bin/lib_win_release  
+metartc大多数使用c语言开发，天生适合嵌入式。  
 
- **remark:程序需要一些动态库才能运行，所需动态库在lib文件夹里，lib文件夹在runtime包中  **   
- **remark:如用qt调试，需将yang_config.ini和lib目录copy到debug和release目录下  **  
-#### windows qt debug dlls
-![图片](https://user-images.githubusercontent.com/87118023/136520546-a03812a7-f91a-479d-a1ff-f6771829d202.png)
+### 容易二次开发  
+webrtc是谷歌开发，代码量大，二次开发难度大。  
 
-#### windows lib dlls
-![图片](https://user-images.githubusercontent.com/87118023/133883028-78abbe6f-4fa1-4817-8ed5-c29951561657.png)
-#### linux lib so
-![图片](https://user-images.githubusercontent.com/87118023/133883160-c10df7ba-ea97-482d-99b4-cb09af73d723.png)
+meta代码量小，二次开发难度小，并且有完整的国人社区。  
+
+### 打造国人生态  
+metaRTC无缝兼容SRS和ZLM,代码整合了其信令交互。  
+
+metaRTC已经实现了国密gmssl支持 。  
+
+metaRTC实现了对龙芯的支持，将来将支持更多的国产芯片。  
+
+### 更适合嵌入式/物联网  
+嵌入式算力弱，不适合webrtc  
+
+嵌入式开发人员纯C开发人员多  
+
+### 更适合元宇宙RTC  
+
+第三代互联网为元宇宙  
+
+支持元宇宙的穿戴设备算力弱，更适合metaRTC  
+
+### 提供H265全套解决方案  
+
+H265比H264可以节省一半的带宽,H265生态在国内比较成熟，如安防等很多行业芯片都支持H265编码。  
+
+metaRTC支持H265版webrtc  
+
+metaRTC提供支持H265的SRS(http://github/metartc/srs-webrtc265)  
+
+### 内置纯C版信令服务  
+
+metap2p工程内置信令服务，信令处理均为纯C实现。
+
+支持datachannel/websocket/http
+
+### 集成ffmpeg 支持静态编译集成到ffmpeg  
+
+集成ffmpeg使ffmpeg支持webrtc推拉流和p2p  
+
+metaRTC集成FFmpeg新版本支持回声消除等AEC/AGC/ANC功能  
+
+## metaRTC功能
+
+1. video encoding 8bit:x265, vaapi, nvenc, etc。
+2. video encoding  10bit:x265、vaapi、nvenc，etc。
+3. video decoding：ffmpeg or yangh264decoder。
+4. VR:基于抠图实现虚拟视频的互动和录制、直播等。
+5. 8bit和10bit网络播放器：yangplayer
+6. audio：Opus、Aac、Speex、Mp3 and other audio codecs。
+7. audio：AEC、AGC、ANS and  SOUND SYNTHESIS 声音合成等处理。
+8. transport：webrtc、rtmp、srt，webrtc is non-google lib。
+9. live：rtmp、srt、webrtc、HLS、HTTP-FLV。
+10. 8bit recording：hh264, h265 mp4 and flv。
+11. 10bit recording：h265 mp4
+12. screen sharing and control 实现了屏幕共享与控制。
+13. a variety of processing of sound and images is realized 实现了声音和图像多种处理。
+14. professional camera gimbal control with multi-lens guide switching 专业摄像头的云台控制与多镜头导播切换。
+15. supports both 32-bit and 64-bit programming 支持32位和64位编程。
+## 应用范围
+
+音视频应用： 视频会议/录播直播/直播互动 IPC/云游戏/云3D/元宇宙RTC  
+
+行业应用： 远程教育/远程医疗/远程办公 指挥调度/安防监控/金融 视频AI/影视录播/电商直播   
+
+## P2P支持
+可内置信令服务  
+实现一对多直播  
+实现浏览器p2p通信  
+实现双向对讲和会议  
+
+## 支持多种传输协议
+
+metaRTC4.0支持WEBRTC/RTMP/SRT/  
+
+metaRTC5.0将支持RTSP/GB2811/QUIC  
+## ARM支持
+
+支持ARM-Linux  
+支持ARM-Android  
+提供ARM编译脚本  
+提供第三方ARM编译文档  
 
 
-编译后生成可执行文件放入下载的运行环境即可运行      
+## module
+### libmetartccore
+webrtc/rtmp 协议实现和基础应用C类库，可集成到ffmpeg  
+如果平台已有采集和编解吗，只需要libmetartccore即可，不需要libmetartc
+### libmetartc
+实现采集、编码、解码、传输(SRT实现)以及推拉流等实现
+### metapushstream/metapushstream_android
+推流和录制 demo metapushstream3_android为安卓版
+### metaplayer/metaplayer_android
+拉流demo,metaplayer_android为安卓版
+### metap2p
+p2p demo，支持一对一和一对多，metaplayer3可直接从metap2p拉流  
+和metapushstream与metaplayer不同，metap2p支持全双工，即一个连接同时支持推拉流   
+### yangwincodec
+nvidia/intel gpu编码  
 
-### 第三方系统源码
+## rtmp支持和录制mp4
+修改配置文件include/yang_config.h 设置Yang_Enable_Openh264为0  
+修改配置文件yang_config.ini enc项 createMeta=1  
+或者程序设置m_context->avinfo.enc.createMeta=1  
 
-https://github.com/metartc/yangwebrtc/releases/tag/thirdparty2.0
-
-里面不包含支持vr动态库，如需支持vr，下载opencv3
-
-https://github.com/opencv/opencv/releases/tag/3.4.13 及以上版本
-
-yang_config.ini配置参数https://github.com/metartc/yangrtc/wiki/config_file  
-
-
+## demo compile
+### linux
+sudo apt install libasound2-dev  
+sudo apt install libgl1-mesa-dev 
