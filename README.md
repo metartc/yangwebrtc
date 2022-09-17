@@ -2,6 +2,7 @@
 yangrtc实现了webrtc协议，支持webrtc/srt/rtmp，提供纯C和C++两种版本接口。   
 webrtc支持为原创，没有引用谷歌webrtc代码,可与谷歌Webrtc库和浏览器互通。  
 支持windows/linux/android等     
+webrtc实现基于metaRTC https://github.com/metartc/metaRTC  
 
 Remark:metaRTC3.0/metaRTC4.0等停止更新，推荐使用稳定版metaRTC5.0  
 Remark:metaRTC5.0为稳定版本    
